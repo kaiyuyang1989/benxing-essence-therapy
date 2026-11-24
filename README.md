@@ -17,7 +17,7 @@
 ## 当前部署
 
 - 域名：`essencetherapy.cn`，在阿里云管理。根域名的四条 A 记录指向 GitHub Pages，`www` 的 CNAME 指向 `kaiyuyang1989.github.io`。
-- 公开站点：GitHub Pages 使用仓库的 `gh-pages` 分支根目录。根域名已设置为自定义域名；HTTPS 证书仍须以 GitHub Pages 状态和实际浏览器访问结果确认。
+- 公开站点：GitHub Pages 使用仓库的 `gh-pages` 分支根目录。`https://essencetherapy.cn/` 已在 2026-11-25 用浏览器和命令行实测可访问；GitHub Pages 证书为 approved，HTTPS enforced。`www` 和 HTTP 入口都会跳转到正式 HTTPS 地址。
 - 自有服务器：阿里云华北 2（北京）的 ECS 已安装 Nginx，并已放入同一版网页。Nginx 目前只监听服务器本机的 `127.0.0.1:8080`，用于内部校验。确认网站备案后，再配置对外访问、HTTPS 及域名切换。
 - 不在页面上填写未核实的 ICP 备案号。
 
