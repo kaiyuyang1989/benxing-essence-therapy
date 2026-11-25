@@ -210,6 +210,7 @@ h2{font-family:var(--serif);font-size:clamp(37px,3.7vw,54px);font-weight:500;let
 .member-process-number{display:block;color:#d6c48e;font-family:Georgia,serif;font-size:18px;letter-spacing:.1em}
 .member-process-grid h3{font-family:var(--serif);font-size:26px;font-weight:500;margin:39px 0 12px}
 .member-process-grid p{font-size:15px;color:#d0dfd0;line-height:1.8;margin:0}
+.member-bank-note{margin:28px 0 0;padding:18px 22px;border-left:2px solid #d1b77e;background:#21483d;color:#dbe6d8;font-size:15px;line-height:1.85}
 .member-public-account{background:#e8ede5}
 .member-public-account-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:100px;align-items:center}
 .member-public-account-grid>div:first-child>p:not(.eyebrow){font-size:17px;line-height:1.9;color:#526a5b;max-width:580px;margin:25px 0 0}
@@ -232,7 +233,7 @@ h2{font-family:var(--serif);font-size:clamp(37px,3.7vw,54px);font-weight:500;let
 .member-shop-card{position:relative;min-height:370px;background:#eef0e8;padding:26px 23px 24px;border-top:2px solid #c4d4bd;display:flex;flex-direction:column}
 .member-shop-card.featured{background:#e1ebe1;border-color:#86ac87}
 .member-shop-status{align-self:flex-start;border-radius:100px;padding:4px 11px;font-size:12px;font-weight:700;letter-spacing:.04em}
-.member-shop-status.consult{background:#d1e4d1;color:#2e6947}.member-shop-status.pending{background:#e9e3d2;color:#806c48}.member-shop-status.research{background:#e2e2e7;color:#696b7f}
+.member-shop-status.consult,.member-shop-status.confirmed{background:#d1e4d1;color:#2e6947}.member-shop-status.research{background:#e2e2e7;color:#696b7f}
 .member-shop-icon{font-family:var(--serif);font-size:54px;color:#8dab8e;line-height:1;margin-top:35px}
 .member-shop-card h3{font-family:var(--serif);font-size:24px;font-weight:500;color:#2f503c;line-height:1.4;margin:13px 0 9px}
 .member-shop-card p{font-size:15px;color:#627767;line-height:1.8;margin:0 0 20px}
@@ -242,7 +243,7 @@ h2{font-family:var(--serif);font-size:clamp(37px,3.7vw,54px);font-weight:500;let
 .member-shop-footnote{font-size:13px;color:#829080;margin:23px 0 0}
 .member-public-referral{background:#e7e9dd}
 .member-referral-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:90px;align-items:center}
-.member-proposed{display:inline-block;border:1px solid #a58b59;color:#806940;border-radius:100px;padding:5px 13px;font-size:12px;font-weight:700;margin-bottom:16px}
+.member-policy-effective{display:inline-block;border:1px solid #7fa589;background:#edf4ec;color:#315d44;border-radius:100px;padding:5px 13px;font-size:12px;font-weight:700;margin-bottom:16px}
 .member-referral-grid>div:last-child p{font-size:18px;line-height:1.9;color:#526553;margin:0}
 .member-highlight{color:#856633;font-weight:700;white-space:nowrap}
 .member-public-faq{background:#faf8f1}
