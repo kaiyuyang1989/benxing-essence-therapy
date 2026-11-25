@@ -8,7 +8,7 @@ ARTICLES = [
         "path": "article-essence.html", "category": "方法 / APPROACH",
         "title": "本性治疗：从身体感受到内在空间",
         "summary": "米杉 2024 年更新的论述，回答这套方法从哪里进入、怎样认识内在资源。",
-        "credit": "据米杉《什么是本性治疗》（2024 年更新论述）整理 · 倪男奇译",
+        "credit": "米杉《什么是本性治疗》 · 倪男奇译",
         "body": '''
         <h2>本性治疗的方法定位</h2>
         <p>米杉把本性治疗定义为一种以身体为中心、采用超个人心理学视角的心理咨询方法。咨询师除了倾听和支持，还会引导来访者进入内在过程，辨认不同的内在空间，并对当下呈现的体验进行工作。</p>
@@ -20,26 +20,26 @@ ARTICLES = [
         <p>资源不是一句安慰自己的口号，而是人实际能够体验到的稳定、关怀、信心和选择能力。米杉认为，工作的一项关键，是帮助来访者逐步辨认受伤的状态，同时不把它等同于“全部的我”。从更有资源的状态出发，人才能以新的方式回应内在的伤痛。</p>
         <h2>将变化整合到日常</h2>
         <p>一次内在体验可能带来新的理解，但整合仍需要具体行动：澄清自己的需要、决定下一次怎样表达，或在熟悉的关系里尝试不同的回应。米杉把这一环节列为七原则的最后一步。</p>
-        <div class="article-callout"><strong>继续读</strong><p>想看完整论述与方法脉络，可从《由心咨询》和《内在父母与内在小孩的拥抱》开始。本文是供网页阅读的编辑版，不代替原文及专业训练。</p><a href="reading.html">查看米杉著作 ↗</a></div>'''
+        <div class="article-callout"><strong>继续读</strong><p>想看完整论述与方法脉络，可从《由心咨询》和《内在父母与内在小孩的拥抱》开始。想继续深入，可从米杉的原著与专业训练入手。</p><a href="reading.html">查看米杉著作 ↗</a></div>'''
     },
     {
         "path": "article-principles.html", "category": "方法 / PRINCIPLES",
         "title": "七个原则，怎样从概念走向练习",
         "summary": "把米杉公开文章中的七原则放回工作过程，说明早期表述与 2024 年版本的差异。",
-        "credit": "据米杉《本性治疗的七个原则》与《什么是本性治疗》（2024 年更新论述）整理",
+        "credit": "米杉《本性治疗的七个原则》《什么是本性治疗》",
         "body": '''
         <h2>七原则的实践脉络</h2>
         <p>米杉在公开文章里强调：本性治疗的重点，是帮助来访者体验并整合一套内在工作的能力。它涉及责任、当下的身体感受、受伤与资源性空间，以及把变化带回生活。把七条背熟，并不等于已经掌握工作方法。</p>
         <div class="article-steps"><div><b>01</b><h3>自我负责</h3><p>先把关注带回自己的体验与选择。它指向可以做的内在工作，不应被用来责备受伤的人。</p></div><div><b>02</b><h3>全然临在</h3><p>回到此时此地，辨认情绪在身体里的具体感受。</p></div><div><b>03</b><h3>年龄回溯</h3><p>当有需要且具备安全条件时，倾听当下感受可能连着的早期经验。</p></div><div><b>04</b><h3>去除认同</h3><p>辨认“我正处于受伤状态”，同时意识到自己并不只等于这个状态。</p></div><div><b>05</b><h3>转化能量</h3><p>从有资源的内在位置接近和回应受伤部分，而非压下感受。</p></div><div><b>06</b><h3>锚定内核</h3><p>进一步熟悉能够接纳、支持和作出选择的内在状态。</p></div><div><b>07</b><h3>整合变化</h3><p>澄清需要与目标，找出生活里下一步可实践的行动。</p></div></div>
         <h2>早期与 2024 年表述的区别</h2>
-        <p>较早发表的《本性治疗的七个原则》，依次写作“承担责任、锚定、回到当下、放大、去除认同、转化、整合变化”。2024 年更新论述则使用上文的“自我负责、全然临在、年龄回溯、去除认同、转化能量、锚定内核、整合变化”。两个版本有共同的核心，但侧重点和顺序不同。本站展示 2024 年版本；需要学习操作时，应回到原文、著作和课程，理解各环节的联系。</p>
+        <p>较早发表的《本性治疗的七个原则》，依次写作“承担责任、锚定、回到当下、放大、去除认同、转化、整合变化”。2024 年更新论述则使用上文的“自我负责、全然临在、年龄回溯、去除认同、转化能量、锚定内核、整合变化”。两个版本有共同的核心，但侧重点和顺序不同。两组表述呈现了米杉对工作步骤的不同侧重；学习操作时，仍需理解各环节之间的联系。</p>
         <div class="article-callout"><strong>进一步学习</strong><p>先认识身体感受，再辨认两个内在空间，最后思考生活中的具体行动。涉及回溯与强烈情绪时，应在具备相应训练的带领下开展。</p><a href="approach.html">认识本性治疗 ↗</a></div>'''
     },
     {
         "path": "article-regression.html", "category": "实践 / REGRESSION",
         "title": "心理咨询一定要回到过去吗？",
         "summary": "本性团队的经典释疑：什么时候回看过往可能有帮助，什么时候应先处理眼前的需要。",
-        "credit": "据本性团队《心理咨询一定要“挖”过去吗？》编辑整理",
+        "credit": "本性团队《心理咨询一定要“挖”过去吗？》",
         "body": '''
         <h2>回溯不是每次咨询的必经步骤</h2>
         <p>有些困扰与眼前的现实条件有关，比如工作安排、沟通或近期压力，直接处理当下的问题就可能更有帮助。对刚经历重大事件、尚未稳定下来的人，先建立安全感与日常支持通常更重要。</p>
@@ -56,7 +56,7 @@ ARTICLES = [
         "path": "article-dreams.html", "category": "实践 / DREAM WORK",
         "title": "梦工作：先倾听，再理解",
         "summary": "从倪男奇的公开文章出发，介绍记梦、听梦、转译和内在工作四个环节。",
-        "credit": "据倪男奇《来访者主动提起梦时才进行梦工作？》编辑整理",
+        "credit": "倪男奇《来访者主动提起梦时才进行梦工作？》",
         "body": '''
         <h2>梦境作为内在工作的素材</h2>
         <p>一个梦可能带着强烈的感受，也可能呈现梦主尚未注意到的关系和资源。倪男奇在公众号文章中提出，咨询师可以开放地邀请来访者留意、记录梦，但邀请不等于要求，更不意味着所有梦都需要解释。</p>
@@ -75,13 +75,13 @@ def build():
         f'<a class="article-card reveal" href="{a["path"]}"><small>{a["category"]}</small><h3>{a["title"]}</h3><p>{a["summary"]}</p><span>阅读全文 ↗</span></a>'
         for a in ARTICLES
     )
-    body = hero("SELECTED ARTICLES", "公众号文章选读", "选录已公开的理论文章与实践释疑，按专题整理并保留原作者署名。", "经典文章")
-    body += f'''<section class="section-space editorial-list"><div class="container">{section_head('FROM OUR PUBLIC ARCHIVE', '经典文章', '保留观点与出处，删去过期课程信息，并补足通向著作与方法页的链接。')}<div class="article-grid">{cards}</div><p class="source-note">网页版本为编辑整理，完整原文请在微信公众号「扎根本性」按标题检索。<a href="https://weixin.qq.com/r/QBPG3qvE6vaVre_990ZS" target="_blank" rel="noopener">打开公众号 ↗</a></p></div></section>'''
+    body = hero("SELECTED ARTICLES", "公众号文章选读", "从方法原理到梦工作与年龄回溯，循着具体问题继续阅读。", "经典文章")
+    body += f'''<section class="section-space editorial-list"><div class="container">{section_head('FROM OUR ARCHIVE', '经典文章', '围绕本性治疗、七原则、年龄回溯和梦工作展开。')}<div class="article-grid">{cards}</div><p class="source-note">更多文章可在微信公众号「扎根本性」阅读。<a href="https://weixin.qq.com/r/QBPG3qvE6vaVre_990ZS" target="_blank" rel="noopener">打开公众号 ↗</a></p></div></section>'''
     page("经典文章", "米杉与本性团队在公众号已发表的本性治疗、七原则、年龄回溯和梦工作文章。", "insights.html", body)
 
     for a in ARTICLES:
         body = hero(a["category"], "本性治疗：<br>感受与内在空间" if a["path"] == "article-essence.html" else a["title"], a["summary"], "经典文章")
-        body += f'''<section class="section-space article-layout"><div class="container article-shell"><aside class="article-side"><span>扎根本性 · 文章选读</span><a href="insights.html">← 返回文章目录</a></aside><article class="article-prose"><p class="article-credit">{a["credit"]}</p>{a["body"]}<footer class="article-source"><p>本站为方便阅读而编辑，保留原作者观点与署名；完整原文可在公众号「扎根本性」按标题检索。</p><a href="https://weixin.qq.com/r/QBPG3qvE6vaVre_990ZS" target="_blank" rel="noopener">打开公众号 ↗</a></footer></article></div></section>'''
+        body += f'''<section class="section-space article-layout"><div class="container article-shell"><aside class="article-side"><span>扎根本性 · 文章选读</span><a href="insights.html">← 返回文章目录</a></aside><article class="article-prose"><p class="article-credit">{a["credit"]}</p>{a["body"]}<footer class="article-source"><p>更多原著论述与文章，可在公众号「扎根本性」继续阅读。</p><a href="https://weixin.qq.com/r/QBPG3qvE6vaVre_990ZS" target="_blank" rel="noopener">打开公众号 ↗</a></footer></article></div></section>'''
         page(a["title"], a["summary"], a["path"], body, "insights.html")
 
 
