@@ -40,4 +40,60 @@ dialog?.addEventListener('close', () => {
   lastTrigger?.focus();
 });
 
-document.querySelector('#year').textContent = new Date().getFullYear();
+document.querySelector('#year')?.replaceChildren(String(new Date().getFullYear()));
+
+const mediaList = document.querySelector('#media-list');
+if (mediaList) {
+  fetch('media.json')
+    .then(response => {
+      if (!response.ok) throw new Error('无法读取节目列表');
+      return response.json();
+    })
+    .then(data => {
+      const items = Array.isArray(data.items) ? data.items : [];
+      mediaList.replaceChildren();
+      for (const item of items) {
+        let url;
+        try { url = new URL(item.url); } catch { continue; }
+        if (url.protocol !== 'https:') continue;
+        const card = document.createElement('a');
+        card.className = `media-card ${item.kind === 'video' ? 'video' : 'audio'}`;
+        card.href = url.href;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+
+        const meta = document.createElement('div');
+        meta.className = 'media-kind';
+        const label = document.createElement('span');
+        label.textContent = `${item.kind === 'video' ? 'VIDEO' : 'AUDIO'} / ${item.language || ''}`;
+        const icon = document.createElement('strong');
+        icon.setAttribute('aria-hidden', 'true');
+        icon.textContent = item.kind === 'video' ? '▷' : '♫';
+        meta.append(label, icon);
+        const title = document.createElement('h3');
+        title.textContent = item.title || '';
+        const originalTitle = document.createElement('p');
+        originalTitle.className = 'original-title';
+        originalTitle.textContent = item.originalTitle || '';
+        const description = document.createElement('p');
+        description.textContent = item.description || '';
+        const footer = document.createElement('div');
+        footer.className = 'media-card-footer';
+        const source = document.createElement('span');
+        source.textContent = item.source || '';
+        const action = document.createElement('b');
+        action.textContent = item.kind === 'video' ? '去观看 ↗' : '去收听 ↗';
+        footer.append(source, action);
+        card.append(meta, title, originalTitle, description, footer);
+        mediaList.append(card);
+      }
+      if (!mediaList.children.length) throw new Error('节目列表为空');
+    })
+    .catch(() => {
+      mediaList.replaceChildren();
+      const fallback = document.createElement('p');
+      fallback.className = 'media-loading';
+      fallback.textContent = '节目列表暂时无法载入。请稍后刷新，或先到「扎根本性」公众号浏览。';
+      mediaList.append(fallback);
+    });
+}

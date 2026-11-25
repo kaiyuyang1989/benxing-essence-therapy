@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://essencetherapy.cn/sitemap.xml

@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "kind": "video",
+      "language": "法语 · 外部平台",
+      "title": "米杉谈沟通与个人成长",
+      "originalTitle": "Communication et développement personnel",
+      "description": "米杉参与的公开访谈视频。由 Julien Peron 发布，可在原平台观看。",
+      "source": "YouTube · Julien Peron",
+      "url": "https://www.youtube.com/watch?v=qZkwEQoW8Ns"
+    },
+    {
+      "kind": "audio",
+      "language": "法语 · 外部平台",
+      "title": "情绪与社会性教育",
+      "originalTitle": "L'éducation émotionnelle et sociale avec Michel Claeys",
+      "description": "米杉接受 Innovation en Éducation 的公开音频访谈，约 43 分钟。",
+      "source": "Ausha · Innovation en Éducation",
+      "url": "https://podcast.ausha.co/innovation-en-education/l-education-emotionnelle-et-sociale-avec-michel-claeys"
+    },
+    {
+      "kind": "audio",
+      "language": "法语 · 外部平台",
+      "title": "学校氛围与社会心理能力",
+      "originalTitle": "Climat scolaire et compétences psychosociales",
+      "description": "一场关于教育现场实践工具的公开音频访谈，约 48 分钟。",
+      "source": "Ausha · Innovation en Éducation",
+      "url": "https://podcast.ausha.co/innovation-en-education/michel-claeys-climat-scolaire-et-competences-psychosociales-quels-outils-pratiques"
+    }
+  ]
+}
