@@ -20,6 +20,7 @@ def header(active=""):
         ("archive.html", "课程沿革", "Archive"),
         ("watch.html", "影像与声音", "Media"),
         ("voices.html", "我们的态度", "Voices"),
+        ("members/", "会员与小店", "Members"),
     ]
     links = "".join(
         f'<a href="{url}"{(" aria-current=" + chr(34) + "page" + chr(34)) if active == url else ""}>{name} <small lang="en">{en}</small></a>'
@@ -34,7 +35,7 @@ def header(active=""):
 
 
 def footer():
-    return '''<footer class="site-footer"><div class="container footer-inner"><div><strong>扎根本性</strong><p>本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.</p><div class="footer-links"><a href="index.html">首页</a><a href="approach.html">本性治疗</a><a href="teacher.html">米杉</a><a href="reading.html">著作</a><a href="archive.html">课程沿革</a><a href="watch.html">影像</a><a href="index.html#contact">联系</a></div></div><div class="footer-meta"><span>奇毓教育科技（杭州）有限公司</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026078107号-1</a><span>© <span id="year">2026</span> 扎根本性</span></div></div></footer>'''
+    return '''<footer class="site-footer"><div class="container footer-inner"><div><strong>扎根本性</strong><p>本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.</p><div class="footer-links"><a href="index.html">首页</a><a href="approach.html">本性治疗</a><a href="teacher.html">米杉</a><a href="reading.html">著作</a><a href="archive.html">课程沿革</a><a href="watch.html">影像</a><a href="members/">会员与小店</a><a href="index.html#contact">联系</a></div></div><div class="footer-meta"><span>奇毓教育科技（杭州）有限公司</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026078107号-1</a><span>© <span id="year">2026</span> 扎根本性</span></div></div></footer>'''
 
 
 def page(title, description, path, body, active=None):
@@ -121,7 +122,7 @@ def update_home():
     text = text.replace('七种著作，<br>从你关心的那本读起。', '六部著作，<br>从原书认识本性。')
     text = text.replace('七种中文出版物，逐本介绍。', '六部中文出版物，逐本介绍。')
     text = text.replace('七种已核实的中文出版著作', '六部中文出版著作')
-    new_nav = '''      <nav class="site-nav" id="site-nav" aria-label="主导航"><a href="approach.html">认识本性 <small lang="en">Approach</small></a><a href="teacher.html">认识米杉 <small lang="en">Michel</small></a><a href="reading.html">米杉著作 <small lang="en">Books</small></a><a href="insights.html">经典文章 <small lang="en">Articles</small></a><a href="archive.html">课程沿革 <small lang="en">Archive</small></a><a href="watch.html">影像与声音 <small lang="en">Media</small></a><a href="voices.html">我们的态度 <small lang="en">Voices</small></a><a class="nav-contact" href="#contact">联系 / Contact</a></nav>'''
+    new_nav = '''      <nav class="site-nav" id="site-nav" aria-label="主导航"><a href="approach.html">认识本性 <small lang="en">Approach</small></a><a href="teacher.html">认识米杉 <small lang="en">Michel</small></a><a href="reading.html">米杉著作 <small lang="en">Books</small></a><a href="insights.html">经典文章 <small lang="en">Articles</small></a><a href="archive.html">课程沿革 <small lang="en">Archive</small></a><a href="watch.html">影像与声音 <small lang="en">Media</small></a><a href="voices.html">我们的态度 <small lang="en">Voices</small></a><a href="members/">会员与小店 <small lang="en">Members</small></a><a class="nav-contact" href="#contact">联系 / Contact</a></nav>'''
     text = re.sub(r'      <nav class="site-nav"[^>]*>.*?</nav>', new_nav, text, count=1, flags=re.S)
     text = text.replace('向内走，<br><em>把力量带回生活。</em>', '本性治疗，<br><em>从真实感受开始。</em>')
     text = text.replace('从此刻的身体感受开始，认识自己的内在空间；在一次次练习中，学习与自己相处，也把新的选择带回日常。', '米杉创立的本性治疗，以身体感受为入口，辨认受伤与资源性的内在空间，并通过持续练习，把新的理解带回生活。')
@@ -141,6 +142,11 @@ def update_home():
     b = text.index('    <section class="reading section-space"', a)
     teacher = '''    <section class="teacher section-space" id="teacher" aria-labelledby="teacher-heading"><div class="container teacher-grid"><div class="teacher-photo-stack"><img src="assets/michel-life-web.jpg" alt="米杉老师坐在室内的生活照" loading="lazy"><span>Michel Claeys Bouuaert</span></div><div class="teacher-copy"><p class="eyebrow"><span class="eyebrow-line"></span>MEET MICHEL CLAEYS</p><h2 id="teacher-heading">认识米杉</h2><p class="teacher-name">Michel Claeys Bouuaert</p><ul class="teacher-titles"><li>比利时心理治疗师</li><li>本性治疗创始人</li><li>世界人本主义心理学大会组织者</li><li>法国情商协会创始人</li></ul><p>米杉有四十余年专业咨询实践经验，2000 至 2015 年间以北京为工作重心，开展讲座与培训。他的中文著作涉及本性治疗、梦工作、情商教育与养育。</p><div class="teacher-links"><a class="text-link" href="teacher.html">阅读米杉完整介绍 ↗</a><a class="text-link" href="reading.html">浏览他的著作 ↗</a></div></div></div></section>\n\n'''
     text = text[:a] + teacher + text[b:]
+    if 'class="member-home-bridge' not in text:
+        bridge = '''    <section class="member-home-bridge section-space" aria-labelledby="member-home-title"><div class="container member-home-bridge-inner"><div><p class="eyebrow eyebrow-light"><span class="eyebrow-line"></span>ESSENCE MEMBERSHIP</p><h2 id="member-home-title">学习的每一步，<br>都值得认真记录。</h2><p>本性会员的积分收入与使用逐笔记录，已核明细由本人在独立账户查看。积分规则与兑换目录以会员站为准。</p><a class="button button-cream" href="members/">认识会员与小店</a></div><div class="member-home-bridge-mark" aria-hidden="true"><span>本性</span><small>MEMBER RECORD</small></div></div></section>
+
+'''
+        text = text.replace('    <section class="dispatch section-space"', bridge + '    <section class="dispatch section-space"', 1)
     a = text.index('    <section class="dispatch section-space"')
     b = text.index('    <section class="public-voice section-space"', a)
     dispatch = '''    <section class="dispatch section-space" aria-labelledby="dispatch-heading"><div class="container"><div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span>EXPLORE FURTHER</p><h2 id="dispatch-heading">专题导览</h2></div></div><div class="dispatch-grid"><a href="approach.html"><small>01 / Approach</small><h3>本性治疗的方法</h3><p>身体感受、内在空间与七原则。</p><span aria-hidden="true">↗</span></a><a href="teacher.html"><small>02 / Michel</small><h3>米杉的经历与教学</h3><p>经历、著作与教学历程。</p><span aria-hidden="true">↗</span></a><a href="reading.html"><small>03 / Books</small><h3>中文著作</h3><p>六部中文出版物，逐本介绍。</p><span aria-hidden="true">↗</span></a><a href="insights.html"><small>04 / Articles</small><h3>公众号文章</h3><p>从方法论述到实践释疑。</p><span aria-hidden="true">↗</span></a><a href="archive.html"><small>05 / Archive</small><h3>课程沿革</h3><p>沿着年份走进各地课程。</p><span aria-hidden="true">↗</span></a><a href="watch.html"><small>06 / Media</small><h3>影像与声音</h3><p>影像、声音与公开资料。</p><span aria-hidden="true">↗</span></a></div></div></section>\n\n'''
@@ -155,6 +161,7 @@ def update_home():
     text = text.replace('从他的著作开始阅读 <span aria-hidden="true">↗</span>', '阅读米杉完整介绍 <span aria-hidden="true">↗</span>')
     text = text.replace('<a class="text-link" href="reading.html">阅读米杉完整介绍', '<a class="text-link" href="teacher.html">阅读米杉完整介绍')
     text = text.replace('米杉老师的著作与课程', '米杉老师的著作与课程')
+    text = text.replace('<a href="#contact">联系</a></div></div><div class="footer-meta">', '<a href="#contact">联系</a><a href="members/">会员与小店</a></div></div><div class="footer-meta">')
     text = text.replace('一页文字，<br>也可以是一个开始。', '米杉中文著作')
     text = text.replace('米杉著作选读', '米杉著作选读')
     text = text.replace('<a href="reading.html#inner-child">《内在父母与内在小孩的拥抱》 ↗</a>', '<a href="book-inner-child.html">《内在父母与内在小孩的拥抱》 ↗</a>')

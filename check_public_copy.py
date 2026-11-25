@@ -18,6 +18,9 @@ INTERNAL_NOTES = (
     "获准发布的原片将逐步",
     "尚未公开出版的教学资料",
     "目前掌握的是首届筑基班学习版",
+    "仍在评估购买、转赠、有效期和成本",
+    "首版目录",
+    "公开授权待核",
 )
 
 
@@ -42,16 +45,17 @@ class VisibleText(HTMLParser):
 
 def main():
     errors = []
-    for path in sorted(ROOT.glob("*.html")):
+    for path in sorted(ROOT.rglob("*.html")):
         parser = VisibleText()
         parser.feed(path.read_text(encoding="utf-8"))
         text = " ".join(parser.parts)
-        errors.extend(f"{path.name}: {phrase}" for phrase in INTERNAL_NOTES if phrase in text)
+        errors.extend(f"{path.relative_to(ROOT)}: {phrase}" for phrase in INTERNAL_NOTES if phrase in text)
     for filename, phrase in (
         ("reading.html", "情绪智能时代"),
         ("teacher.html", "情绪智能时代"),
         ("archive.html", "首届本性治疗筑基班"),
         ("archive.html", "情商培训师认证班"),
+        ("members/index.html", "登录查询积分"),
     ):
         if phrase not in (ROOT / filename).read_text(encoding="utf-8"):
             errors.append(f"{filename}: 缺少 {phrase}")
