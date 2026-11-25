@@ -1,0 +1,202 @@
+"""Generate the static editorial pages and book details from reviewed content."""
+
+import html
+import json
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).parent
+DIST = ROOT / "dist"
+BOOKS = json.loads((ROOT / "content/books.json").read_text(encoding="utf-8"))
+E = html.escape
+
+
+def header(active=""):
+    items = [
+        ("approach.html", "认识本性", "Approach"),
+        ("teacher.html", "认识米杉", "Michel"),
+        ("reading.html", "米杉著作", "Books"),
+        ("insights.html", "经典文章", "Articles"),
+        ("archive.html", "课程沿革", "Archive"),
+        ("watch.html", "影像与声音", "Media"),
+        ("voices.html", "我们的态度", "Voices"),
+    ]
+    links = "".join(
+        f'<a href="{url}"{(" aria-current=" + chr(34) + "page" + chr(34)) if active == url else ""}>{name} <small lang="en">{en}</small></a>'
+        for url, name, en in items
+    )
+    return f'''<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header"><div class="header-inner container">
+<a class="brand" href="index.html" aria-label="扎根本性，返回首页"><img src="assets/essence-logo.png" alt="" width="86" height="48"><span class="brand-name">扎根本性<span class="brand-en">ESSENCE THERAPY</span></span></a>
+<button class="menu-toggle" type="button" aria-label="打开导航" aria-controls="site-nav" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav class="site-nav" id="site-nav" aria-label="主导航">{links}<a class="nav-contact" href="index.html#contact">联系 / Contact</a></nav>
+</div></header>'''
+
+
+def footer():
+    return '''<footer class="site-footer"><div class="container footer-inner"><div><strong>扎根本性</strong><p>本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.</p><div class="footer-links"><a href="index.html">首页</a><a href="approach.html">本性治疗</a><a href="teacher.html">米杉</a><a href="reading.html">著作</a><a href="archive.html">课程沿革</a><a href="watch.html">影像</a><a href="index.html#contact">联系</a></div></div><div class="footer-meta"><span>奇毓教育科技（杭州）有限公司</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026078107号-1</a><span>© <span id="year">2026</span> 扎根本性</span></div></div></footer>'''
+
+
+def page(title, description, path, body, active=None):
+    document = f'''<!doctype html><html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#173d34">
+<meta name="description" content="{E(description)}"><link rel="canonical" href="https://essencetherapy.cn/{path}"><title>{E(title)}｜扎根本性</title>
+<link rel="icon" type="image/png" href="assets/essence-logo.png"><link rel="stylesheet" href="styles.css"><script defer src="app.js"></script></head>
+<body id="top">{header(active or path)}<main id="main">{body}</main>{footer()}</body></html>'''
+    (DIST / path).write_text(document, encoding="utf-8")
+
+
+def hero(label, title, lead, crumb):
+    return f'''<section class="page-hero nature-page"><div class="container page-hero-inner"><p class="breadcrumb"><a href="index.html">首页</a><span aria-hidden="true">/</span> {E(crumb)}</p><p class="eyebrow"><span class="eyebrow-line"></span>{E(label)}</p><h1>{title}</h1><p class="page-lead">{lead}</p></div></section>'''
+
+
+def section_head(label, title, intro=""):
+    return f'''<div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span>{E(label)}</p><h2>{title}</h2></div>{f'<p class="section-intro">{intro}</p>' if intro else ''}</div>'''
+
+
+def book_card(book, index):
+    cover = '<div class="poster-book-cover" role="img" aria-label="《内在父母与内在小孩的拥抱》封面，取自团队公开海报"></div>' if book["image"] == "poster-crop" else f'<img src="assets/books/{E(book["image"])}" alt="《{E(book["title"])}》封面" loading="lazy" class="{E(book["image_class"])}">'
+    return f'''<article class="catalog-card reveal" id="{E(book['slug'])}"><a class="catalog-cover" href="book-{E(book['slug'])}.html" aria-label="查看《{E(book['title'])}》详情">{cover}</a><div class="catalog-copy"><p class="micro-en">{index:02d} / {E(book['topic'])}</p><h3><a href="book-{E(book['slug'])}.html">{E(book['title'])}</a></h3><p class="catalog-subtitle">{E(book['subtitle'])}</p><p>{E(book['summary'])}</p><div class="catalog-meta"><span>{E(book['year'])} · {E(book['publisher'])}</span><a class="text-link" href="book-{E(book['slug'])}.html">阅读详情 ↗</a></div></div></article>'''
+
+
+def build_books():
+    cards = "".join(book_card(book, i) for i, book in enumerate(BOOKS, 1))
+    body = hero("BOOKS & WRITING", "米杉中文著作", "六部公开出版著作，涵盖本性治疗、梦工作、情商教育与养育。", "米杉著作")
+    body += f'''<section class="section-space reading-profile"><div class="container profile-grid"><div class="profile-photo"><img src="assets/michel-life-web.jpg" alt="米杉老师坐在室内的生活照" loading="lazy"></div><div><p class="eyebrow"><span class="eyebrow-line"></span>MEET THE AUTHOR</p><h2>米杉 <span lang="fr">Michel Claeys Bouuaert</span></h2><p>比利时心理治疗师、本性治疗创始人，长期从事情商与社会情感教育。他的著作涵盖本性治疗方法、梦工作和面向家庭与教育者的实践。</p><a class="text-link" href="teacher.html">认识米杉与他的经历 ↗</a></div></div></section>
+<section class="section-space book-section" id="published"> <div class="container">{section_head('PUBLISHED IN CHINESE', '中文出版著作', '每本都有独立介绍页。书目信息与购买情况请以所链接的出版或书店页面为准。')}<div class="catalog-grid">{cards}</div></div></section>
+<section class="section-space editorial-note"><div class="container note-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>READING NOTES</p><h2>版本与书目说明</h2></div><div><p>书目封面按团队公开海报展示。《梦的真相》采用 2021 年版，《儿童情商教育》采用 2022 年版；每本详情页列有相应 ISBN 和外部书店入口。</p><p>《内在父母与内在小孩的拥抱》的海报封面与目前查到的 2013 年书店图片不同，具体印次待出版社核实。本站只提供介绍和购买入口，不提供书籍下载。</p></div></div></section>
+<section class="section-space internal-note"><div class="container">{section_head('TEACHING MATERIALS', '尚未公开出版的教学资料')}<div class="internal-grid"><article><span>01 / 课程内部阅读</span><h3>《本性治疗中的年龄回溯》</h3><p>目前掌握的是首届筑基班学习版与较早的内部稿，分卷使用范围不同。这里仅列名称和主题，不提供全文或购买入口。</p></article><article><span>02 / 认证项目内部阅读</span><h3>《社会情感教育教师指导》</h3><p>现有资料封面题为《社交情感学习》，供米杉情商培训师认证项目成员使用。本站不将其标为公开出版物。</p></article></div></div></section>
+<section class="section-space quote-gallery-section" id="quotes"><div class="container">{section_head('OPEN QUOTE CARDS', '已公开的著作卡片')}<p class="section-lead">以下三张卡片来自已公开的米杉著作系列；短句须放回原书语境阅读。</p><div class="quote-gallery"><a href="assets/quote-inner-022.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-022.jpg" alt="《内在父母与内在小孩的拥抱》公开金句卡片" loading="lazy"><span>著作卡片 01 ↗</span></a><a href="assets/quote-inner-030.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-030.jpg" alt="《内在父母与内在小孩的拥抱》公开金句卡片" loading="lazy"><span>著作卡片 02 ↗</span></a><a href="assets/quote-inner-015.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-015.jpg" alt="《内在父母与内在小孩的拥抱》公开金句卡片" loading="lazy"><span>著作卡片 03 ↗</span></a></div><p class="source-note"><a href="https://kaiyuyang1989.github.io/mishan-quote-cards/" target="_blank" rel="noopener">浏览全部已公开卡片 ↗</a></p></div></section>'''
+    page("米杉著作", "米杉六部中文出版著作的独立介绍、版本信息与购买入口。", "reading.html", body)
+
+    for book in BOOKS:
+        cover = '<div class="poster-book-cover" role="img" aria-label="《内在父母与内在小孩的拥抱》封面，取自团队公开海报"></div>' if book["image"] == "poster-crop" else f'<img src="assets/books/{E(book["image"])}" alt="《{E(book["title"])}》封面" class="{E(book["image_class"])}">'
+        external = f'<a class="button button-dark" href="{E(book["source"])}" target="_blank" rel="noopener noreferrer">{E(book["source_label"])} ↗</a>'
+        if book.get("second_source"):
+            external += f'<a class="text-link" href="{E(book["second_source"])}" target="_blank" rel="noopener noreferrer">{E(book["second_label"])} ↗</a>'
+        body = hero("THE BOOKS", E(book["title"]), E(book["topic"]), "米杉著作")
+        focus = "".join(f'<li>{E(item)}</li>' for item in book["focus"])
+        body += f'''<section class="section-space book-detail"><div class="container book-detail-grid"><div class="book-detail-cover">{cover}<p>{'画面取自团队公开海报' if book['image'] == 'poster-crop' else '封面与团队公开海报所列版本一致'}</p></div><div class="book-detail-copy"><p class="eyebrow"><span class="eyebrow-line"></span>{E(book['year'])} · {E(book['publisher'])}</p><h2>{E(book['title'])}</h2><p class="book-detail-subtitle">{E(book['subtitle'])}</p><p class="lead">{E(book['summary'])}</p><h3>内容介绍</h3><p>{E(book['about'])}</p><h3>本书关注</h3><ul class="book-focus">{focus}</ul><h3>适合谁阅读</h3><p>{E(book['reading'])}</p><h3>版本与书目</h3><p>{E(book['editions'])}</p><dl><div><dt>作者</dt><dd>米杉 Michel Claeys Bouuaert</dd></div><div><dt>出版年份</dt><dd>{E(book['year'])}</dd></div><div><dt>出版社</dt><dd>{E(book['publisher'])}</dd></div><div><dt>ISBN</dt><dd>{E(book['isbn'])}</dd></div></dl><div class="book-actions">{external}</div><p class="source-note">外部书店的库存、价格与配送方式以页面实时信息为准。本站不提供图书下载。</p></div></div></section><section class="section-space related"><div class="container">{section_head('KEEP EXPLORING', '继续阅读')}<div class="related-grid"><a href="reading.html"><small>ALL BOOKS</small><strong>全部著作</strong><span>回到书目 ↗</span></a><a href="teacher.html"><small>THE AUTHOR</small><strong>认识米杉</strong><span>经历与教学 ↗</span></a><a href="approach.html"><small>THE APPROACH</small><strong>认识本性治疗</strong><span>从方法开始 ↗</span></a></div></div></section>'''
+        page(book["title"], f'米杉《{book["title"]}》介绍、版本和书目信息。', f'book-{book["slug"]}.html', body, "reading.html")
+
+
+def build_teacher():
+    body = hero("MICHEL CLAEYS BOUUAERT", "认识米杉", "比利时心理治疗师 · 本性治疗创始人 · 世界人本主义心理学大会组织者 · 法国情商协会创始人", "认识米杉")
+    body += '''<section class="section-space teacher-biography"><div class="container teacher-bio-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>ABOUT MICHEL</p><h2>专业经历与中文著作</h2><p>米杉（Michel Claeys Bouuaert）出生于比利时，曾学习法律与犯罪学，后来把工作转向教育、心理咨询与个人成长。他接触并整合多种人本主义和超个人心理学方法，逐渐形成自己的本性治疗实践。</p><p>据团队公开资料，米杉有四十余年专业咨询实践经验，曾参与组织世界人本主义心理学大会，并创立法国情商协会。2000 至 2015 年间，他以北京为工作重心，为中国高校、心理专业机构与学习团体开展讲座和培训。他的中文著作涉及本性治疗、梦工作、情商教育与养育。</p><p class="source-note">经历与身份据团队提供的公开介绍海报；在华教学记录另见<a href="https://xueronghua.bnu.edu.cn/kcypx/jz/jzyg/52692.html" target="_blank" rel="noopener">北京师范大学公开讲座资料</a>、<a href="https://www.hqu.edu.cn/info/1073/14191.htm" target="_blank" rel="noopener">华侨大学报道</a>。</p></div><figure class="teacher-bio-photo"><img src="assets/michel-life-web.jpg" alt="米杉老师坐在室内的生活照" loading="lazy"><figcaption>米杉 Michel Claeys Bouuaert</figcaption></figure></div></section>
+<section class="section-space credentials"><div class="container"><p class="eyebrow"><span class="eyebrow-line"></span>WORK & WRITING</p><h2>主要工作领域</h2><div class="credentials-grid"><article><span>01</span><h3>心理治疗实践者</h3><p>在咨询与培训中，把注意力放回当下的身体感受、关系与内在空间。</p></article><article><span>02</span><h3>本性治疗创始人</h3><p>将人本主义与超个人心理学视角结合，发展出本性治疗的工作方法。</p></article><article><span>03</span><h3>梦工作的研究与教学者</h3><p>通过著作、讲座和工作坊，讨论如何记录、理解并运用梦。</p></article><article><span>04</span><h3>情商教育工作者</h3><p>面向儿童、父母、教师和带领者，写作情绪与社会性学习的活动和方法。</p></article></div></div></section>
+<section class="section-space teacher-gallery-section"><div class="container">''' + section_head("PORTRAITS", "米杉肖像") + '''<div class="teacher-gallery" data-gallery><figure class="is-active"><img src="assets/michel-claeys.jpg" alt="米杉老师正面人像" loading="lazy"><figcaption>本性课程公开肖像</figcaption></figure><figure><img src="assets/michel-life-web.jpg" alt="米杉老师的室内生活照" loading="lazy"><figcaption>生活照</figcaption></figure><figure><img src="assets/michel-close.jpg" alt="米杉老师近景肖像" loading="lazy"><figcaption>人物近景</figcaption></figure></div><div class="gallery-controls"><button type="button" data-gallery-prev aria-label="上一张照片">←</button><span data-gallery-count>1 / 3</span><button type="button" data-gallery-next aria-label="下一张照片">→</button></div></div></section>
+<section class="section-space history-teaser"><div class="container">''' + section_head("A LONGER STORY", "在中国的公开教学记录", "依据高校报道、出版记录和公开课程资料整理。") + '''<ol class="history-mini"><li><time>2000</time><div><h3>来到北京</h3><p>开始在中国从事咨询、讲座与专业培训。</p></div></li><li><time>2010</time><div><h3>在华侨大学授课</h3><p>校方记录了五天的专业指导，主题包括本性治疗七原则与梦工作。</p><a href="https://www.hqu.edu.cn/info/1073/14191.htm" target="_blank" rel="noopener">查看校方报道 ↗</a></div></li><li><time>2013</time><div><h3>北京师范大学梦主题讲座</h3><p>以“我们的梦说的都是我们自己”为题，面向公众分享梦工作的思路。</p><a href="https://xueronghua.bnu.edu.cn/kcypx/jz/jzyg/52692.html" target="_blank" rel="noopener">查看讲座资料 ↗</a></div></li><li><time>2026</time><div><h3>继续在中国开展工作坊</h3><p>公开课程资料可见青岛梦工作坊与郑州本性治疗一阶。</p><a href="archive.html">看课程沿革 ↗</a></div></li></ol></div></section>
+<section class="section-space related"><div class="container">''' + section_head("MORE TO EXPLORE", "延伸阅读") + '''<div class="related-grid"><a href="reading.html"><small>BOOKS</small><strong>米杉著作</strong><span>六部中文出版物 ↗</span></a><a href="approach.html"><small>APPROACH</small><strong>本性治疗</strong><span>方法与原则 ↗</span></a><a href="watch.html"><small>MEDIA</small><strong>影像与声音</strong><span>公开节目 ↗</span></a></div></div></section>'''
+    page("认识米杉", "米杉 Michel Claeys Bouuaert 的经历、身份、著作与公开教学记录。", "teacher.html", body)
+
+
+def build_approach():
+    body = hero("THE APPROACH", "本性治疗的方法与原则", "从身体感受进入，辨认受伤与资源性的内在空间，并在生活中整合变化。", "认识本性")
+    body += '''<section class="section-space detail-intro"><div class="container intro-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>WHAT IT IS</p><h2>以身体感受为工作入口</h2></div><div class="intro-copy"><p class="lead">反复出现的情绪与反应，常常需要在当下的体验中得到更深入的理解。</p><p>本性治疗是米杉发展的一套心理咨询方法。它从当下的身体感受进入内在工作，帮助人辨认受伤的部分与可以支持自己的资源空间，并在生活中尝试新的选择。</p><p>这里介绍的是学习入口。若要深入理解方法、适用范围和实际操作，请阅读米杉原著，并在具备相应资质的带领下学习。</p></div></div></section>
+<section class="section-space principles"><div class="container">''' + section_head("THE CORE", "方法的三个核心环节") + '''<div class="principle-stack"><article class="principle-row" id="presence"><span class="principle-no">01</span><div><p class="micro-en">PRESENCE · 此时此地</p><h3>从身体感受进入</h3><p>当情绪升起，先留意呼吸、身体和此刻的感受。让经验有机会被看见，而不是急着解释它。</p></div><a href="book-heart.html">读《由心咨询》 ↗</a></article><article class="principle-row" id="resources"><span class="principle-no">02</span><div><p class="micro-en">INNER SPACES · 内在空间</p><h3>看见受伤，也找到资源</h3><p>米杉用“内在小孩”和“内在父母”说明不同的内在状态：一边需要被倾听，一边能够给予支持。</p></div><a href="book-inner-child.html">读《内在父母…》 ↗</a></article><article class="principle-row" id="integration"><span class="principle-no">03</span><div><p class="micro-en">INTEGRATION · 回到生活</p><h3>把体验化成可以做的事</h3><p>课堂里的理解，需要回到关系和日常中继续练习。变化往往来自一次次具体的回应。</p></div><a href="archive.html">看课程资料 ↗</a></article></div></div></section>
+<section class="section-space seven-principles"><div class="container">''' + section_head("SEVEN PRINCIPLES", "米杉提出的七个原则。", "以下是便于入门的简写；完整论述请以原文和著作为准。") + '''<ol class="seven-grid"><li><b>01</b><strong>自我负责</strong><span>从自己能选择的地方开始。</span></li><li><b>02</b><strong>全然临在</strong><span>回到此时此地的感受。</span></li><li><b>03</b><strong>年龄回溯</strong><span>倾听受伤经验的来处。</span></li><li><b>04</b><strong>去除认同</strong><span>不把一个受伤状态当作全部的自己。</span></li><li><b>05</b><strong>转化能量</strong><span>以新的关系回应旧的感受。</span></li><li><b>06</b><strong>锚定内核</strong><span>联结有力量的内在空间。</span></li><li><b>07</b><strong>整合变化</strong><span>明确下一步，把体验带回生活。</span></li></ol><p class="source-note">整理依据：米杉《什么是本性治疗》（2024 年更新论述，倪男奇译）及公众号已公开课程资料。<a href="reading.html">继续读原著 ↗</a></p></div></section>
+<section class="section-space related"><div class="container">''' + section_head("KEEP EXPLORING", "延伸阅读") + '''<div class="related-grid"><a href="teacher.html"><small>MICHEL</small><strong>认识米杉</strong><span>人、书与教学 ↗</span></a><a href="reading.html"><small>BOOKS</small><strong>走进著作</strong><span>从原书继续 ↗</span></a><a href="archive.html"><small>ARCHIVE</small><strong>课程沿革</strong><span>过去与现在 ↗</span></a></div></div></section>'''
+    page("认识本性治疗", "本性治疗从身体感受出发，认识内在空间与资源。了解米杉方法及七个原则。", "approach.html", body)
+
+
+def build_archive():
+    body = hero("COURSE ARCHIVE", "课程与教学沿革", "从高校讲座、著作出版到近年来的本性治疗工作坊。", "课程沿革")
+    body += '''<section class="section-space archive-intro"><div class="container note-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>ARCHIVE / 课程沿革</p><h2>公开资料中的教学历程</h2></div><div><p>本性治疗在中国已有多年的教学与传播记录。高校报道、出版书目与往期课程文章，为回顾这一历程提供了可核查的资料。</p><p>这里先收录能核对来源的节点；往期课程均为历史资料，时间、价格及报名方式不再适用。</p></div></div></section>
+<section class="section-space archive-timeline"><div class="container">''' + section_head("PUBLIC RECORDS", "可查的历史节点。") + '''<div class="archive-list"><article><time>2000</time><div><span class="archive-tag">来华开展工作</span><h3>米杉来到北京</h3><p>此后为中国高校及专业机构开展讲座与培训。多家出版社及北京师范大学的公开介绍均有记载。</p><a href="https://xueronghua.bnu.edu.cn/kcypx/jz/jzyg/52692.html" target="_blank" rel="noopener">看北京师范大学资料 ↗</a></div></article><article><time>2010</time><div><span class="archive-tag">高校培训 · 泉州</span><h3>华侨大学心理辅导中心专题指导</h3><p>11 月 4 日至 8 日，米杉为校心理辅导中心教师介绍本性治疗七原则，并带领梦工作相关练习。</p><a href="https://www.hqu.edu.cn/info/1073/14191.htm" target="_blank" rel="noopener">看校方报道 ↗</a></div></article><article><time>2013</time><div><span class="archive-tag">公开讲座 · 北京</span><h3>“我们的梦说的都是我们自己”</h3><p>4 月 27 日，北京师范大学发布米杉梦主题讲座通知，介绍梦的理解与工作方法。</p><a href="https://xueronghua.bnu.edu.cn/kcypx/jz/jzyg/52692.html" target="_blank" rel="noopener">看讲座资料 ↗</a></div></article><article><time>2026</time><div><span class="archive-tag">本性梦工作坊 · 青岛</span><h3>从梦境进入内在工作</h3><p>10 月 30 日至 11 月 1 日。往期公众号课程资料记录了梦境元素、转译与小组练习等教学主题。</p><a href="book-dream.html">读《梦的真相》 ↗</a></div></article><article><time>2026</time><div><span class="archive-tag">本性治疗一阶 · 郑州</span><h3>从感受、内在空间到资源</h3><p>11 月 13 日至 15 日。往期课程资料记录了三天的学习结构：探索身份、认识情绪、联结资源。</p><a href="approach.html">认识方法 ↗</a></div></article><article><time>2027</time><div><span class="archive-tag">下一站 · 春季</span><h3>杭州与郑州三场线下工作坊</h3><p>本性治疗一阶、梦工作坊与二阶的当期安排已发布。课程日期和详情以当前课表为准。</p><a href="index.html#courses">看 2027 春季课程 ↗</a></div></article></div></div></section>
+<section class="section-space archive-visuals"><div class="container">''' + section_head("DOCUMENTS & IMAGES", "海报也是课程的记录。", "以下为已公开使用的 2027 春季课程海报与课表。") + '''<div class="archive-visual-grid"><a href="assets/course-level-1.jpg" target="_blank" rel="noopener"><img src="assets/course-level-1.jpg" alt="2027 春季本性治疗一阶课程海报" loading="lazy"><span>本性治疗一阶 · 杭州 ↗</span></a><a href="assets/course-dream.jpg" target="_blank" rel="noopener"><img src="assets/course-dream.jpg" alt="2027 春季米杉梦工作坊海报" loading="lazy"><span>米杉梦工作坊 · 郑州 ↗</span></a><a href="assets/course-level-2.jpg" target="_blank" rel="noopener"><img src="assets/course-level-2.jpg" alt="2027 春季本性治疗二阶课程海报" loading="lazy"><span>本性治疗二阶 · 郑州 ↗</span></a></div></div></section>
+<section class="section-space related"><div class="container">''' + section_head("CONTINUE", "接着了解。") + '''<div class="related-grid"><a href="teacher.html"><small>MICHEL</small><strong>认识米杉</strong><span>经历与教学 ↗</span></a><a href="reading.html"><small>BOOKS</small><strong>米杉著作</strong><span>出版脉络 ↗</span></a><a href="index.html#courses"><small>2027</small><strong>春季课程</strong><span>当前安排 ↗</span></a></div></div></section>'''
+    page("课程沿革", "米杉在中国的公开讲座、工作坊、著作与 2027 春季课程历史资料。", "archive.html", body)
+
+
+def build_watch():
+    body = hero("WATCH & LISTEN", "米杉的影像与声音", "收录可核实来源的公开节目；获准发布的原片将逐步提供站内播放。", "影像与声音")
+    body += '''<section class="section-space video-home"><div class="container">''' + section_head("VIDEO LIBRARY", "站内视频", "已经获得官网发布许可的原片会放在这里，访客可直接播放。") + '''<div id="local-video-list" class="local-video-grid"><p class="media-loading">正在载入视频资料…</p></div></div></section>
+<section class="section-space media-section"><div class="container">''' + section_head("PUBLIC CONVERSATIONS", "外部公开节目", "这些节目保留发布者的原链接；海外平台在中国大陆可能无法直接访问。") + '''<div class="media-grid" id="media-list"><p class="media-loading">正在载入公开节目…</p></div><noscript><p>查看视频和节目列表需要启用 JavaScript。</p></noscript></div></section>
+<section class="section-space media-follow"><div class="container media-follow-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>MORE IN CHINESE</p><h2>公众号资料库</h2><p>公众号收录米杉的著作讨论、方法文章与课程资料。微信内可打开，电脑上可以扫码。</p><a class="button button-dark" href="https://weixin.qq.com/r/QBPG3qvE6vaVre_990ZS" target="_blank" rel="noopener">打开公众号 ↗</a></div><div class="qr-card"><img src="assets/wechat-official-qr.png" alt="扎根本性公众号二维码" loading="lazy"><p>公众号 · 扎根本性</p></div></div></section>'''
+    page("影像与声音", "米杉的公开影像和声音节目。站内视频支持直接播放，外部节目保留原平台链接。", "watch.html", body)
+
+
+def build_voices():
+    body = hero("OUR POINT OF VIEW", "学习与带领的态度", "关于倾听、练习、边界与持续学习的团队原则。", "我们的态度")
+    body += '''<section class="section-space attitude-intro"><div class="container note-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>WHAT WE BELIEVE</p><h2>尊重体验，也尊重专业边界</h2></div><div><p>课程以理论讲授、方法示范和小组练习帮助学习者建立体验。每个人的经历和承受能力不同，带领者需要尊重其节奏与边界。</p><p>这里的话由团队整理，是我们对教学与学习的态度；不冒称学员原话或老师引语。</p></div></div></section>
+<section class="section-space statement-section"><div class="container">''' + section_head("IN PRACTICE", "四项实践原则") + '''<div class="statement-grid"><article class="statement-card reveal"><span>01 / LISTEN</span><h3>以倾听进入工作</h3><p>关注来访者当下的身体感受与表达，避免仓促解释。</p></article><article class="statement-card reveal"><span>02 / PRACTICE</span><h3>重视练习与整合</h3><p>通过示范、练习与课后复盘，支持学习者将方法应用于现实生活。</p></article><article class="statement-card reveal"><span>03 / RESPECT</span><h3>尊重个人节奏与边界</h3><p>在团体和个人工作中，依据参与者的意愿与状态调整探索深度。</p></article><article class="statement-card reveal"><span>04 / TOGETHER</span><h3>持续学习与督导</h3><p>专业能力依赖阅读、实操、反馈和督导的长期积累。</p></article></div><p class="statement-credit">以上为「扎根本性」团队文字。</p></div></section>
+<section class="section-space voice-journey"><div class="container voice-journey-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>FROM HERE</p><h2>继续了解本性治疗</h2><p>可从著作、公开节目和课程沿革继续了解方法。</p></div><div class="related-grid"><a href="reading.html"><small>READ</small><strong>读著作</strong><span>从文字开始 ↗</span></a><a href="watch.html"><small>WATCH</small><strong>看与听</strong><span>公开节目 ↗</span></a><a href="archive.html"><small>ARCHIVE</small><strong>课程沿革</strong><span>看这段路 ↗</span></a></div></div></section>'''
+    page("我们的态度", "扎根本性团队对倾听、练习、尊重边界与同行学习的态度。", "voices.html", body)
+
+
+def update_home():
+    p = DIST / "index.html"
+    text = p.read_text(encoding="utf-8")
+    text = text.replace('七种著作，<br>从你关心的那本读起。', '六部著作，<br>从原书认识本性。')
+    text = text.replace('七种中文出版物，逐本介绍。', '六部中文出版物，逐本介绍。')
+    text = text.replace('七种已核实的中文出版著作', '六部中文出版著作')
+    new_nav = '''      <nav class="site-nav" id="site-nav" aria-label="主导航"><a href="approach.html">认识本性 <small lang="en">Approach</small></a><a href="teacher.html">认识米杉 <small lang="en">Michel</small></a><a href="reading.html">米杉著作 <small lang="en">Books</small></a><a href="insights.html">经典文章 <small lang="en">Articles</small></a><a href="archive.html">课程沿革 <small lang="en">Archive</small></a><a href="watch.html">影像与声音 <small lang="en">Media</small></a><a href="voices.html">我们的态度 <small lang="en">Voices</small></a><a class="nav-contact" href="#contact">联系 / Contact</a></nav>'''
+    text = re.sub(r'      <nav class="site-nav"[^>]*>.*?</nav>', new_nav, text, count=1, flags=re.S)
+    text = text.replace('向内走，<br><em>把力量带回生活。</em>', '本性治疗，<br><em>从真实感受开始。</em>')
+    text = text.replace('从此刻的身体感受开始，认识自己的内在空间；在一次次练习中，学习与自己相处，也把新的选择带回日常。', '米杉创立的本性治疗，以身体感受为入口，辨认受伤与资源性的内在空间，并通过持续练习，把新的理解带回生活。')
+    text = text.replace('这条路，<br>可以慢慢走。', '怎样学习<br>本性治疗？')
+    text = text.replace('你可以从一次阅读或体验开始，再按自己的节奏进入工作坊。课后的练习与交流，也是在生活里继续应用方法的一部分。', '从书和文章认识方法，再在课程中体验、练习。理解一个概念之后，仍需要在生活里检验它。')
+    text = text.replace('有时候，我们已经想明白了很多道理，心里却还是会难受。', '情绪不只是一种想法，也会表现为身体里的感受。')
+    text = text.replace('本性治疗是一套以身体感受为入口的内在工作方法。它邀请我们暂时放下分析，去觉察当下发生了什么，认识受伤的内在空间，也重新联结有力量、有资源的自己。', '本性治疗由米杉创立，是一种以身体为中心的心理咨询方法。它帮助来访者辨认受伤的内在空间和资源性的内在空间，并在咨询师的引导下，对当下的体验进行工作。')
+    text = text.replace('理解只是开始。通过体验、练习和持续的整合，新的觉察才有机会走进关系与生活。', '内在工作的成果还需要通过具体选择，在日常生活和关系中继续整合。')
+    text = text.replace('感受 · 觉察 · 练习 · 整合', '从感受出发，在生活里练习')
+    text = text.replace('给自己一条<br>可以继续走的路。', '这条路，<br>可以慢慢走。')
+    text = text.replace('一页文字，<br>也可以是一个开始。', '米杉中文著作')
+    text = text.replace('先从米杉的著作和已经公开的金句卡片认识这些方法。', '六部中文出版著作，涵盖本性治疗、梦工作、儿童情商教育与养育。')
+    text = text.replace('走进米杉与著作 ↗', '查看全部著作 ↗')
+    text = text.replace('一页文字，<br>也可以是一个开始。', '米杉中文著作')
+    text = text.replace('我们的态度 <small>Voices</small>', '我们的态度 <small>Voices</small>')
+    a = text.index('    <section class="teacher section-space"')
+    b = text.index('    <section class="reading section-space"', a)
+    teacher = '''    <section class="teacher section-space" id="teacher" aria-labelledby="teacher-heading"><div class="container teacher-grid"><div class="teacher-photo-stack"><img src="assets/michel-life-web.jpg" alt="米杉老师坐在室内的生活照" loading="lazy"><span>Michel Claeys Bouuaert</span></div><div class="teacher-copy"><p class="eyebrow"><span class="eyebrow-line"></span>MEET MICHEL CLAEYS</p><h2 id="teacher-heading">认识米杉</h2><p class="teacher-name">Michel Claeys Bouuaert</p><ul class="teacher-titles"><li>比利时心理治疗师</li><li>本性治疗创始人</li><li>世界人本主义心理学大会组织者</li><li>法国情商协会创始人</li></ul><p>米杉有四十余年专业咨询实践经验，2000 至 2015 年间以北京为工作重心，开展讲座与培训。他的中文著作涉及本性治疗、梦工作、情商教育与养育。</p><div class="teacher-links"><a class="text-link" href="teacher.html">阅读米杉完整介绍 ↗</a><a class="text-link" href="reading.html">浏览他的著作 ↗</a></div></div></div></section>\n\n'''
+    text = text[:a] + teacher + text[b:]
+    a = text.index('    <section class="dispatch section-space"')
+    b = text.index('    <section class="public-voice section-space"', a)
+    dispatch = '''    <section class="dispatch section-space" aria-labelledby="dispatch-heading"><div class="container"><div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span>EXPLORE FURTHER</p><h2 id="dispatch-heading">专题导览</h2></div></div><div class="dispatch-grid"><a href="approach.html"><small>01 / Approach</small><h3>本性治疗的方法</h3><p>身体感受、内在空间与七原则。</p><span aria-hidden="true">↗</span></a><a href="teacher.html"><small>02 / Michel</small><h3>米杉的经历与教学</h3><p>经历、肖像与教学记录。</p><span aria-hidden="true">↗</span></a><a href="reading.html"><small>03 / Books</small><h3>中文著作</h3><p>六部中文出版物，逐本介绍。</p><span aria-hidden="true">↗</span></a><a href="insights.html"><small>04 / Articles</small><h3>公众号文章</h3><p>整理方法论述与实践释疑。</p><span aria-hidden="true">↗</span></a><a href="archive.html"><small>05 / Archive</small><h3>课程沿革</h3><p>公开讲座与工作坊记录。</p><span aria-hidden="true">↗</span></a><a href="watch.html"><small>06 / Media</small><h3>影像与声音</h3><p>影像、声音与公开资料。</p><span aria-hidden="true">↗</span></a></div></div></section>\n\n'''
+    text = text[:a] + dispatch + text[b:]
+    a = text.index('    <section class="public-voice section-space"')
+    b = text.index('    <section class="contact section-space"', a)
+    article_feature = '''    <section class="public-voice section-space" aria-labelledby="voice-heading"><div class="container public-voice-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>FROM OUR ARCHIVE</p><h2 id="voice-heading">本性治疗文献与<br>公众号文章选读</h2><p>选录米杉与本性团队已公开的理论文章和实践释疑，涵盖本性治疗定义、七原则、年龄回溯与梦工作，并注明作者和编辑依据。</p><a class="text-link" href="insights.html">阅读经典文章 ↗</a></div><div class="voice-image" role="img" aria-label="晨光中的远山与树林"></div></div></section>\n\n'''
+    text = text[:a] + article_feature + text[b:]
+    text = text.replace('本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.', '本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.')
+    text = text.replace('米杉是比利时心理治疗师、本性治疗创始人。', '米杉是比利时心理治疗师、本性治疗创始人。')
+    text = text.replace('在中国，他通过著作、分享、工作坊与练习，和学习者一起探索如何把内在工作带回生活。', '他在中国的著作和课程积累多年，留下了许多可以继续读、继续练的资料。')
+    text = text.replace('从他的著作开始阅读 <span aria-hidden="true">↗</span>', '阅读米杉完整介绍 <span aria-hidden="true">↗</span>')
+    text = text.replace('<a class="text-link" href="reading.html">阅读米杉完整介绍', '<a class="text-link" href="teacher.html">阅读米杉完整介绍')
+    text = text.replace('米杉老师的著作与课程', '米杉老师的著作与课程')
+    text = text.replace('一页文字，<br>也可以是一个开始。', '米杉中文著作')
+    text = text.replace('米杉著作选读', '米杉著作选读')
+    text = text.replace('<a href="reading.html#inner-child">《内在父母与内在小孩的拥抱》 ↗</a>', '<a href="book-inner-child.html">《内在父母与内在小孩的拥抱》 ↗</a>')
+    text = text.replace('<a href="reading.html#heart">《由心咨询》 ↗</a>', '<a href="book-heart.html">《由心咨询》 ↗</a>')
+    text = text.replace('<a href="reading.html#dream">《梦的真相》 ↗</a>', '<a href="book-dream.html">《梦的真相》 ↗</a>')
+    text = text.replace('公开访谈与声音，课堂视频持续收录。', '公开节目与课程影像逐步收录。')
+    text = text.replace('© <span id="year">2026</span> 扎根本性', '© <span id="year">2026</span> 扎根本性')
+    text = text.replace('本性治疗，<br><em>从真实感受开始。</em>', '本性治疗：<br><em>从身体感受开始</em>')
+    text = text.replace('本性治疗：<br><em>以身体感受进入内在工作。</em>', '本性治疗：<br><em>从身体感受开始</em>')
+    text = text.replace('米杉创立的本性治疗，以身体感受为入口，辨认受伤与资源性的内在空间，并通过持续练习，把新的理解带回生活。', '米杉创立的本性治疗，是超个人心理学视角下、以身体为中心的心理咨询方法。通过识别受伤与资源性的内在空间，开展内在工作，并将变化整合到生活。')
+    text = text.replace('本性治疗，<br>从真实的感受开始。', '本性治疗，<br>以身体感受为入口。')
+    text = text.replace('情绪不只是一种想法，也会表现为身体里的感受。', '当情绪和反应反复出现，身体感受为进一步理解内在经验提供了入口。')
+    text = text.replace('怎样学习<br>本性治疗？', '学习路径：<br>理论、示范与练习')
+    text = text.replace('从书和文章认识方法，再在课程中体验、练习。理解一个概念之后，仍需要在生活里检验它。', '从著作与公开文章建立理论认识；在课程中通过方法示范、小组练习与督导反馈发展实际能力，并在课后持续整合。')
+    text = text.replace('三场线下工作坊，分别从本性治疗的基础、梦工作与深入练习展开。选择你现在想走的那一步。', '三场线下工作坊分别聚焦本性治疗基础、梦工作与二阶深化。课程采用理论讲授、方法示范和小组实操相结合的形式。')
+    text = text.replace('从自己开始，<br>走进本性治疗。', '本性治疗一阶：<br>核心方法入门')
+    text = text.replace('认识内在空间，体验本性治疗的核心流程，在现场练习中建立初步的感受与理解。', '学习识别身体感受、区分受伤与资源性的内在空间，并通过示范和小组练习认识本性治疗的核心流程。')
+    text = text.replace('从梦出发，<br>听见内在的语言。', '米杉梦工作坊：<br>转译与内在工作')
+    text = text.replace('以梦为入口，探索梦与内在空间之间的联系，体验梦工作的学习路径。', '学习梦境元素的理解与转译，并以梦为素材探索受伤与资源性的内在空间。')
+    text = text.replace('让内在工作，<br>走得更深一些。', '本性治疗二阶：<br>深化方法实践')
+    text = text.replace('在一阶基础上继续学习与练习本性治疗的方法，深化对内在过程的理解。', '在一阶基础上继续学习本性治疗核心流程，并深化年龄回溯、情绪转化与内在资源锚定的练习。')
+    text = text.replace('从这里，<br>继续你的探索。', '课程咨询与<br>内容订阅')
+    text = text.replace('想了解课程、报名方式，或找到适合自己的学习入口？扫码联系小扎，告诉我们你现在最想了解什么。', '了解课程内容、报名方式与学习路径，可扫描二维码联系小扎；公众号「扎根本性」持续更新方法文章与课程资料。')
+    text = text.replace('把力量带回生活', '本性治疗方法与课程')
+    text = text.replace('从身体的感受出发，练习与内在资源重新联结。了解本性治疗与 2027 春季课程。', '了解米杉创立的本性治疗、中文著作、公开文章及 2027 春季课程。')
+    p.write_text(text, encoding="utf-8")
+
+
+if __name__ == "__main__":
+    build_books()
+    build_teacher()
+    build_approach()
+    build_archive()
+    build_watch()
+    build_voices()
+    update_home()
