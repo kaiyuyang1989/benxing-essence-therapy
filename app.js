@@ -97,3 +97,77 @@ if (mediaList) {
       mediaList.append(fallback);
     });
 }
+
+document.querySelectorAll('[data-gallery]').forEach(gallery => {
+  const images = [...gallery.querySelectorAll('figure')];
+  const controls = gallery.nextElementSibling;
+  const count = controls?.querySelector('[data-gallery-count]');
+  if (!images.length) return;
+  let current = 0;
+  const show = index => {
+    current = (index + images.length) % images.length;
+    images.forEach((figure, position) => figure.classList.toggle('is-active', position === current));
+    if (count) count.textContent = `${current + 1} / ${images.length}`;
+  };
+  controls?.querySelector('[data-gallery-prev]')?.addEventListener('click', () => show(current - 1));
+  controls?.querySelector('[data-gallery-next]')?.addEventListener('click', () => show(current + 1));
+});
+
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(element => {
+    element.classList.add('will-reveal');
+    observer.observe(element);
+  });
+}
+
+const localVideoList = document.querySelector('#local-video-list');
+if (localVideoList) {
+  const showEmpty = () => {
+    const note = document.createElement('p');
+    note.className = 'video-empty';
+    note.textContent = '站内视频原片正在核对与整理。你可以先阅读公开文章，或浏览下方的原平台节目。';
+    localVideoList.replaceChildren(note);
+  };
+  fetch('videos.json')
+    .then(response => {
+      if (!response.ok) throw new Error('无法读取视频列表');
+      return response.json();
+    })
+    .then(data => {
+      const items = Array.isArray(data.items) ? data.items : [];
+      localVideoList.replaceChildren();
+      for (const item of items) {
+        let source;
+        try { source = new URL(item.src, location.href); } catch { continue; }
+        if (source.protocol !== 'https:' && source.origin !== location.origin) continue;
+        const card = document.createElement('article');
+        card.className = 'local-video-card';
+        const video = document.createElement('video');
+        video.controls = true;
+        video.preload = 'none';
+        video.playsInline = true;
+        video.src = source.href;
+        if (item.poster) {
+          try {
+            const poster = new URL(item.poster, location.href);
+            if (poster.protocol === 'https:' || poster.origin === location.origin) video.poster = poster.href;
+          } catch { /* An invalid optional poster must not hide the video. */ }
+        }
+        const title = document.createElement('h3');
+        title.textContent = item.title || '米杉视频';
+        const description = document.createElement('p');
+        description.textContent = item.description || '';
+        card.append(video, title, description);
+        localVideoList.append(card);
+      }
+      if (!localVideoList.children.length) showEmpty();
+    })
+    .catch(showEmpty);
+}
