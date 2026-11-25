@@ -63,6 +63,21 @@ def main():
     for path in sorted(ROOT.rglob("*.html")):
         if 'href="members/' in path.read_text(encoding="utf-8"):
             errors.append(f"{path.relative_to(ROOT)}: 仍有会员入口")
+    book_pages = [ROOT / "reading.html", *sorted(ROOT.glob("book-*.html"))]
+    if len(book_pages) != 7:
+        errors.append(f"购书码页面数量不符：{len(book_pages)}")
+    for path in book_pages:
+        source = path.read_text(encoding="utf-8")
+        if "assets/wechat-books-shop.jpg" not in source:
+            errors.append(f"{path.name}: 缺少统一购书码")
+        if "search.megbook.com.hk" in source or "sanmin.com.tw" in source or "查看书店购买页" in source:
+            errors.append(f"{path.name}: 仍有旧购书链接")
+    if not (ROOT / "assets/wechat-books-shop.jpg").is_file():
+        errors.append("缺少微信小店购书码原图")
+    for path in sorted(ROOT.rglob("*.html")):
+        source = path.read_text(encoding="utf-8")
+        if "我们的态度" in source or '>态度</a>' in source:
+            errors.append(f"{path.relative_to(ROOT)}: 栏目仍称态度")
     if errors:
         raise SystemExit("\n".join(errors))
     print("Public copy audit passed")

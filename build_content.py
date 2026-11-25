@@ -19,7 +19,7 @@ def header(active=""):
         ("insights.html", "经典文章", "Articles"),
         ("archive.html", "课程沿革", "Archive"),
         ("watch.html", "影像与声音", "Media"),
-        ("voices.html", "我们的态度", "Voices"),
+        ("voices.html", "我们的理念", "Philosophy"),
     ]
     links = "".join(
         f'<a href="{url}"{(" aria-current=" + chr(34) + "page" + chr(34)) if active == url else ""}>{name} <small lang="en">{en}</small></a>'
@@ -59,24 +59,26 @@ def book_card(book, index):
     return f'''<article class="catalog-card reveal" id="{E(book['slug'])}"><a class="catalog-cover" href="book-{E(book['slug'])}.html" aria-label="查看《{E(book['title'])}》详情">{cover}</a><div class="catalog-copy"><p class="micro-en">{index:02d} / {E(book['topic'])}</p><h3><a href="book-{E(book['slug'])}.html">{E(book['title'])}</a></h3><p class="catalog-subtitle">{E(book['subtitle'])}</p><p>{E(book['summary'])}</p><div class="catalog-meta"><span>{E(book['year'])} · {E(book['publisher'])}</span><a class="text-link" href="book-{E(book['slug'])}.html">阅读详情 ↗</a></div></div></article>'''
 
 
+def bookshop_code():
+    return '''<div class="bookshop-panel"><div class="bookshop-copy"><p class="eyebrow"><span class="eyebrow-line"></span>WECHAT BOOKSHOP</p><h3>选购米杉著作</h3><p>微信扫一扫，进入世界图书出版公司小店选购米杉著作。</p><p class="bookshop-mobile-hint">手机浏览可长按图片识别。</p></div><a class="bookshop-code" href="assets/wechat-books-shop.jpg" target="_blank" rel="noopener" aria-label="打开微信小店购书码原图"><img src="assets/wechat-books-shop.jpg" alt="世界图书出版公司微信小店购书码" loading="lazy"></a></div>'''
+
+
 def build_books():
     cards = "".join(book_card(book, i) for i, book in enumerate(BOOKS, 1))
     body = hero("BOOKS & WRITING", "米杉中文著作", "六部公开出版著作，涵盖本性治疗、梦工作、情商教育与养育。", "米杉著作")
     body += f'''<section class="section-space reading-profile"><div class="container profile-grid"><div class="profile-photo"><img src="assets/michel-life-web.jpg" alt="米杉老师坐在室内的生活照" loading="lazy"></div><div><p class="eyebrow"><span class="eyebrow-line"></span>MEET THE AUTHOR</p><h2>米杉 <span lang="fr">Michel Claeys Bouuaert</span></h2><p>比利时心理治疗师、本性治疗创始人，长期从事情商与社会情感教育。他的著作涵盖本性治疗方法、梦工作和面向家庭与教育者的实践。</p><a class="text-link" href="teacher.html">认识米杉与他的经历 ↗</a></div></div></section>
 <section class="section-space book-section" id="published"><div class="container">{section_head('PUBLISHED IN CHINESE', '中文出版著作', '从本性治疗、梦工作到情商教育与养育，沿着不同主题阅读米杉。')}<div class="catalog-grid">{cards}</div></div></section>
+<section class="section-space bookshop-section"><div class="container">{bookshop_code()}</div></section>
 <section class="section-space forthcoming-book"><div class="container forthcoming-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>FORTHCOMING / 新著</p><h2>《情绪智能时代》</h2><p>米杉正在出版中的新著。关于情绪智能的下一部作品，敬请关注后续出版消息。</p></div><span class="forthcoming-mark">出版中</span></div></section>
 <section class="section-space quote-gallery-section" id="quotes"><div class="container">{section_head('BOOK EXCERPTS', '从著作继续阅读')}<p class="section-lead">从《内在父母与内在小孩的拥抱》的短句进入，再回到原书阅读完整论述。</p><div class="quote-gallery"><a href="assets/quote-inner-022.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-022.jpg" alt="《内在父母与内在小孩的拥抱》摘录卡片" loading="lazy"><span>著作摘录 01 ↗</span></a><a href="assets/quote-inner-030.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-030.jpg" alt="《内在父母与内在小孩的拥抱》摘录卡片" loading="lazy"><span>著作摘录 02 ↗</span></a><a href="assets/quote-inner-015.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-015.jpg" alt="《内在父母与内在小孩的拥抱》摘录卡片" loading="lazy"><span>著作摘录 03 ↗</span></a></div><p class="source-note"><a href="https://kaiyuyang1989.github.io/mishan-quote-cards/" target="_blank" rel="noopener">浏览更多著作卡片 ↗</a></p></div></section>'''
-    page("米杉著作", "米杉六部中文出版著作的介绍、购买入口及出版中的《情绪智能时代》。", "reading.html", body)
+    page("米杉著作", "米杉六部中文出版著作的介绍、微信扫码购书入口及出版中的《情绪智能时代》。", "reading.html", body)
 
     for book in BOOKS:
         cover = '<div class="poster-book-cover" role="img" aria-label="《内在父母与内在小孩的拥抱》封面"></div>' if book["image"] == "poster-crop" else f'<img src="assets/books/{E(book["image"])}" alt="《{E(book["title"])}》封面" class="{E(book["image_class"])}">'
-        external = f'<a class="button button-dark" href="{E(book["source"])}" target="_blank" rel="noopener noreferrer">{E(book["source_label"])} ↗</a>'
-        if book.get("second_source"):
-            external += f'<a class="text-link" href="{E(book["second_source"])}" target="_blank" rel="noopener noreferrer">{E(book["second_label"])} ↗</a>'
         body = hero("THE BOOKS", E(book["title"]), E(book["topic"]), "米杉著作")
         focus = "".join(f'<li>{E(item)}</li>' for item in book["focus"])
-        body += f'''<section class="section-space book-detail"><div class="container book-detail-grid"><div class="book-detail-cover">{cover}</div><div class="book-detail-copy"><p class="eyebrow"><span class="eyebrow-line"></span>{E(book['year'])} · {E(book['publisher'])}</p><h2>{E(book['title'])}</h2><p class="book-detail-subtitle">{E(book['subtitle'])}</p><p class="lead">{E(book['summary'])}</p><h3>内容介绍</h3><p>{E(book['about'])}</p><h3>本书关注</h3><ul class="book-focus">{focus}</ul><h3>适合谁阅读</h3><p>{E(book['reading'])}</p><h3>书目信息</h3><dl><div><dt>作者</dt><dd>米杉 Michel Claeys Bouuaert</dd></div><div><dt>出版年份</dt><dd>{E(book['year'])}</dd></div><div><dt>出版社</dt><dd>{E(book['publisher'])}</dd></div><div><dt>ISBN</dt><dd>{E(book['isbn'])}</dd></div></dl><div class="book-actions">{external}</div></div></div></section><section class="section-space related"><div class="container">{section_head('KEEP EXPLORING', '继续阅读')}<div class="related-grid"><a href="reading.html"><small>ALL BOOKS</small><strong>全部著作</strong><span>回到书目 ↗</span></a><a href="teacher.html"><small>THE AUTHOR</small><strong>认识米杉</strong><span>经历与教学 ↗</span></a><a href="approach.html"><small>THE APPROACH</small><strong>认识本性治疗</strong><span>从方法开始 ↗</span></a></div></div></section>'''
-        page(book["title"], f'米杉《{book["title"]}》内容介绍与购买入口。', f'book-{book["slug"]}.html', body, "reading.html")
+        body += f'''<section class="section-space book-detail"><div class="container book-detail-grid"><div class="book-detail-cover">{cover}</div><div class="book-detail-copy"><p class="eyebrow"><span class="eyebrow-line"></span>{E(book['year'])} · {E(book['publisher'])}</p><h2>{E(book['title'])}</h2><p class="book-detail-subtitle">{E(book['subtitle'])}</p><p class="lead">{E(book['summary'])}</p><h3>内容介绍</h3><p>{E(book['about'])}</p><h3>本书关注</h3><ul class="book-focus">{focus}</ul><h3>适合谁阅读</h3><p>{E(book['reading'])}</p><h3>书目信息</h3><dl><div><dt>作者</dt><dd>米杉 Michel Claeys Bouuaert</dd></div><div><dt>出版年份</dt><dd>{E(book['year'])}</dd></div><div><dt>出版社</dt><dd>{E(book['publisher'])}</dd></div><div><dt>ISBN</dt><dd>{E(book['isbn'])}</dd></div></dl>{bookshop_code()}</div></div></section><section class="section-space related"><div class="container">{section_head('KEEP EXPLORING', '继续阅读')}<div class="related-grid"><a href="reading.html"><small>ALL BOOKS</small><strong>全部著作</strong><span>回到书目 ↗</span></a><a href="teacher.html"><small>THE AUTHOR</small><strong>认识米杉</strong><span>经历与教学 ↗</span></a><a href="approach.html"><small>THE APPROACH</small><strong>认识本性治疗</strong><span>从方法开始 ↗</span></a></div></div></section>'''
+        page(book["title"], f'米杉《{book["title"]}》内容介绍与微信扫码购书入口。', f'book-{book["slug"]}.html', body, "reading.html")
 
 
 def build_teacher():
@@ -108,11 +110,11 @@ def build_watch():
 
 
 def build_voices():
-    body = hero("OUR POINT OF VIEW", "学习与带领的态度", "关于倾听、练习、边界与持续学习的团队原则。", "我们的态度")
+    body = hero("OUR PHILOSOPHY", "学习与带领的理念", "关于倾听、练习、边界与持续学习的团队原则。", "我们的理念")
     body += '''<section class="section-space attitude-intro"><div class="container note-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>WHAT WE BELIEVE</p><h2>尊重体验，也尊重专业边界</h2></div><div><p>课程以理论讲授、方法示范和小组练习帮助学习者建立体验。每个人的经历和承受能力不同，带领者需要尊重其节奏与边界。</p><p>在课程中，理论讲授、方法示范与小组练习相互支持；课后仍需要持续实践与复盘。</p></div></div></section>
 <section class="section-space statement-section"><div class="container">''' + section_head("IN PRACTICE", "四项实践原则") + '''<div class="statement-grid"><article class="statement-card reveal"><span>01 / LISTEN</span><h3>以倾听进入工作</h3><p>关注来访者当下的身体感受与表达，避免仓促解释。</p></article><article class="statement-card reveal"><span>02 / PRACTICE</span><h3>重视练习与整合</h3><p>通过示范、练习与课后复盘，支持学习者将方法应用于现实生活。</p></article><article class="statement-card reveal"><span>03 / RESPECT</span><h3>尊重个人节奏与边界</h3><p>在团体和个人工作中，依据参与者的意愿与状态调整探索深度。</p></article><article class="statement-card reveal"><span>04 / TOGETHER</span><h3>持续学习与督导</h3><p>专业能力依赖阅读、实操、反馈和督导的长期积累。</p></article></div><p class="statement-credit">扎根本性团队</p></div></section>
 <section class="section-space voice-journey"><div class="container voice-journey-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>FROM HERE</p><h2>继续了解本性治疗</h2><p>可从著作、公开节目和课程沿革继续了解方法。</p></div><div class="related-grid"><a href="reading.html"><small>READ</small><strong>读著作</strong><span>从文字开始 ↗</span></a><a href="watch.html"><small>WATCH</small><strong>看与听</strong><span>公开节目 ↗</span></a><a href="archive.html"><small>ARCHIVE</small><strong>课程沿革</strong><span>看这段路 ↗</span></a></div></div></section>'''
-    page("我们的态度", "扎根本性团队对倾听、练习、尊重边界与同行学习的态度。", "voices.html", body)
+    page("我们的理念", "扎根本性团队关于倾听、练习、专业边界与同行学习的理念。", "voices.html", body)
 
 
 def update_home():
@@ -121,7 +123,7 @@ def update_home():
     text = text.replace('七种著作，<br>从你关心的那本读起。', '六部著作，<br>从原书认识本性。')
     text = text.replace('七种中文出版物，逐本介绍。', '六部中文出版物，逐本介绍。')
     text = text.replace('七种已核实的中文出版著作', '六部中文出版著作')
-    new_nav = '''      <nav class="site-nav" id="site-nav" aria-label="主导航"><a href="approach.html">认识本性 <small lang="en">Approach</small></a><a href="teacher.html">认识米杉 <small lang="en">Michel</small></a><a href="reading.html">米杉著作 <small lang="en">Books</small></a><a href="insights.html">经典文章 <small lang="en">Articles</small></a><a href="archive.html">课程沿革 <small lang="en">Archive</small></a><a href="watch.html">影像与声音 <small lang="en">Media</small></a><a href="voices.html">我们的态度 <small lang="en">Voices</small></a><a class="nav-contact" href="#contact">联系 / Contact</a></nav>'''
+    new_nav = '''      <nav class="site-nav" id="site-nav" aria-label="主导航"><a href="approach.html">认识本性 <small lang="en">Approach</small></a><a href="teacher.html">认识米杉 <small lang="en">Michel</small></a><a href="reading.html">米杉著作 <small lang="en">Books</small></a><a href="insights.html">经典文章 <small lang="en">Articles</small></a><a href="archive.html">课程沿革 <small lang="en">Archive</small></a><a href="watch.html">影像与声音 <small lang="en">Media</small></a><a href="voices.html">我们的理念 <small lang="en">Philosophy</small></a><a class="nav-contact" href="#contact">联系 / Contact</a></nav>'''
     text = re.sub(r'      <nav class="site-nav"[^>]*>.*?</nav>', new_nav, text, count=1, flags=re.S)
     text = text.replace('向内走，<br><em>把力量带回生活。</em>', '本性治疗，<br><em>从真实感受开始。</em>')
     text = text.replace('从此刻的身体感受开始，认识自己的内在空间；在一次次练习中，学习与自己相处，也把新的选择带回日常。', '米杉创立的本性治疗，以身体感受为入口，辨认受伤与资源性的内在空间，并通过持续练习，把新的理解带回生活。')
@@ -136,7 +138,8 @@ def update_home():
     text = text.replace('先从米杉的著作和已经公开的金句卡片认识这些方法。', '六部中文出版著作，涵盖本性治疗、梦工作、儿童情商教育与养育。')
     text = text.replace('走进米杉与著作 ↗', '查看全部著作 ↗')
     text = text.replace('一页文字，<br>也可以是一个开始。', '米杉中文著作')
-    text = text.replace('我们的态度 <small>Voices</small>', '我们的态度 <small>Voices</small>')
+    text = text.replace('读我们的态度', '读我们的理念')
+    text = text.replace('<a href="voices.html">态度</a>', '<a href="voices.html">理念</a>')
     a = text.index('    <section class="teacher section-space"')
     b = text.index('    <section class="reading section-space"', a)
     teacher = '''    <section class="teacher section-space" id="teacher" aria-labelledby="teacher-heading"><div class="container teacher-grid"><div class="teacher-photo-stack"><img src="assets/michel-life-web.jpg" alt="米杉老师坐在室内的生活照" loading="lazy"><span>Michel Claeys Bouuaert</span></div><div class="teacher-copy"><p class="eyebrow"><span class="eyebrow-line"></span>MEET MICHEL CLAEYS</p><h2 id="teacher-heading">认识米杉</h2><p class="teacher-name">Michel Claeys Bouuaert</p><ul class="teacher-titles"><li>比利时心理治疗师</li><li>本性治疗创始人</li><li>世界人本主义心理学大会组织者</li><li>法国情商协会创始人</li></ul><p>米杉有四十余年专业咨询实践经验，2000 至 2015 年间以北京为工作重心，开展讲座与培训。他的中文著作涉及本性治疗、梦工作、情商教育与养育。</p><div class="teacher-links"><a class="text-link" href="teacher.html">阅读米杉完整介绍 ↗</a><a class="text-link" href="reading.html">浏览他的著作 ↗</a></div></div></div></section>\n\n'''
