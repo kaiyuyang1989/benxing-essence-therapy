@@ -26,6 +26,6 @@
 - 域名：`essencetherapy.cn`，在阿里云管理。根域名的四条 A 记录指向 GitHub Pages，`www` 的 CNAME 指向 `kaiyuyang1989.github.io`。
 - 公开站点：GitHub Pages 使用仓库的 `gh-pages` 分支根目录。`https://essencetherapy.cn/` 已在 2026-11-25 用浏览器和命令行实测可访问；GitHub Pages 证书为 approved，HTTPS enforced。`www` 和 HTTP 入口都会跳转到正式 HTTPS 地址。
 - 备案：阿里云备案详情已确认 `essencetherapy.cn` 的网站备案号为 `浙ICP备2026078107号-1`，备案所用 ECS 公网 IP 为 `123.57.234.36`。页脚已悬挂该号码并链接到工信部备案系统；公开站点和 ECS 本机页面均核验通过。
-- 自有服务器：阿里云华北 2（北京）的 ECS 已安装 Nginx、Certbot，并放入同一版网页。Nginx 目前只监听服务器本机的 `127.0.0.1:8080`；证书验证脚本与 HTTPS 配置已预置，但尚未取得正式证书，也未开放 80/443 端口或切换 DNS。当前公开访问仍由 GitHub Pages 承接。
+- 自有服务器：阿里云华北 2（北京）的 ECS 已安装 Nginx、Certbot，保留了本轮改版前的网页副本。Nginx 目前只监听服务器本机的 `127.0.0.1:8080`；证书验证脚本与 HTTPS 配置已预置，但尚未取得正式证书，也未开放 80/443 端口或切换 DNS。当前公开访问仍由 GitHub Pages 承接。未来切换到 ECS 前，先从 `gh-pages` 同步最新网页并核验。
 
 发布更新时，提交 `dist/` 中的文件，并将其发布到 `gh-pages` 分支。GitHub Pages 设置界面可能直接在该分支写入 CNAME 提交；发布前先 `git fetch origin gh-pages`，基于远端最新提交更新站点，避免覆盖这些提交。同步 ECS 时可通过云助手下载该分支归档并更新 `/var/www/essencetherapy`，同时确保站点目录可供 Nginx 读取（目录 755、文件 644）。切换正式域名的目标地址前，须先核对证书、服务器公网访问和页面内容。
