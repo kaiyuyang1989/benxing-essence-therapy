@@ -55,10 +55,14 @@ def main():
         ("teacher.html", "情绪智能时代"),
         ("archive.html", "首届本性治疗筑基班"),
         ("archive.html", "情商培训师认证班"),
-        ("members/index.html", "登录查询积分"),
     ):
         if phrase not in (ROOT / filename).read_text(encoding="utf-8"):
             errors.append(f"{filename}: 缺少 {phrase}")
+    if (ROOT / "members").exists():
+        errors.append("members/: 官网会员板块应整体撤下")
+    for path in sorted(ROOT.rglob("*.html")):
+        if 'href="members/' in path.read_text(encoding="utf-8"):
+            errors.append(f"{path.relative_to(ROOT)}: 仍有会员入口")
     if errors:
         raise SystemExit("\n".join(errors))
     print("Public copy audit passed")
