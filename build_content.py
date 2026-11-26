@@ -28,7 +28,7 @@ def header(active=""):
     )
     return f'''<a class="skip-link" href="#main">跳到正文</a>
 <header class="site-header"><div class="header-inner container">
-<a class="brand" href="index.html" aria-label="扎根本性，返回首页"><img src="assets/essence-logo-web.png" alt="" width="86" height="48"><span class="brand-name">扎根本性<span class="brand-en">ESSENCE THERAPY</span></span></a>
+<a class="brand" href="index.html"><img src="assets/essence-logo-web.png" alt="" width="86" height="48"><span class="brand-name">扎根本性<span class="brand-en">ESSENCE THERAPY</span></span></a>
 <button class="menu-toggle" type="button" aria-label="打开导航" aria-controls="site-nav" aria-expanded="false"><span></span><span></span><span></span></button>
 <nav class="site-nav" id="site-nav" aria-label="主导航">{links}<a class="nav-contact" href="index.html#contact">联系 / Contact</a></nav>
 </div></header>'''

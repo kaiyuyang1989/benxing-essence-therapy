@@ -14,6 +14,7 @@
   <meta property="og:locale" content="zh_CN">
   <title>扎根本性｜本性治疗 · 米杉课程</title>
   <link rel="icon" type="image/png" href="assets/essence-logo-web.png">
+  <link rel="preload" as="image" href="assets/mountain-dawn-web.jpg" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
   <script defer src="app.js"></script>
 </head>
@@ -22,7 +23,7 @@
 
   <header class="site-header">
     <div class="header-inner container">
-      <a class="brand" href="#top" aria-label="扎根本性，返回首页">
+      <a class="brand" href="#top">
         <img src="assets/essence-logo-web.png" alt="" width="86" height="48">
         <span class="brand-name">扎根本性<span class="brand-en">ESSENCE THERAPY</span></span>
       </a>
@@ -49,7 +50,10 @@
         </div>
         <div class="hero-portrait-wrap">
           <div class="hero-portrait-frame">
-            <img class="hero-portrait" src="assets/michel-claeys.jpg" alt="本性治疗创始人米杉老师" width="1024" height="1536" fetchpriority="high">
+            <picture>
+              <source media="(max-width: 760px)" srcset="assets/michel-claeys-mobile.jpg">
+              <img class="hero-portrait" src="assets/michel-claeys.jpg" alt="本性治疗创始人米杉老师" width="1024" height="1536">
+            </picture>
           </div>
           <div class="portrait-caption"><span>米杉 Michel Claeys</span><span>本性治疗创始人</span></div>
         </div>
