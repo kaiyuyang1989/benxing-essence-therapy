@@ -30,3 +30,5 @@
 比较了 GitHub 上的 [Motion](https://github.com/motiondivision/motion)、[GSAP](https://github.com/greensock/GSAP) 与 [AOS](https://github.com/michalsnik/aos)。对这个静态站，原生 CSS、`details` 和少量筛选脚本已足够完成交互，避免增加运行包和首次载入负担。
 
 生成顺序：`build_content.py` → `build_guide.py` → `build_editorial.py` → `build_courses.py` → `tools/finalize_site.py`。随后运行站内链接审计和公开文案检查。正式发布后核对 `guide.html`、`archive.html`、`teacher.html` 和首页的实际响应；浏览器视觉检查情况单独记录。
+
+补充检查：新增专题导航后，980 像素及以下宽度使用折叠菜单，避免平板宽度一行导航拥挤；菜单与原有屏幕阅读标签保持一致。
