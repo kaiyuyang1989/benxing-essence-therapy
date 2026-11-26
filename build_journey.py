@@ -12,6 +12,20 @@ MILESTONES = [
         "link": "https://xueronghua.bnu.edu.cn/kcypx/jz/jzyg/52692.html", "link_text": "北京师范大学讲座资料",
     },
     {
+        "id": "dream-2005", "year": "2005", "date": "5 月起", "city": "北京",
+        "kind": "首个梦工作坊", "title": "从一间办公室开始的梦工作",
+        "intro": "米杉在北京带领首个梦工作坊，参加者带着自己记录的梦，在小组中探索梦与个人经验的联系。",
+        "details": ["《梦的真相》2010 年版译者序记载，工作坊于 2005 年 5 月在北京服装学院的一间办公室开始。", "小组成员分享各自的梦，从探问理论背景，逐渐进入对内在经验的探索。"],
+        "link": "book-dream.html", "link_text": "了解《梦的真相》",
+    },
+    {
+        "id": "eq-class-2006", "year": "2006", "date": "2006—2007", "city": "北京",
+        "kind": "高校情商课程", "title": "北京印刷学院的连续情商课",
+        "intro": "受北京印刷学院心理中心邀请，米杉为本科生和研究生开设两期连续情商课。",
+        "details": ["《情商教练手册》2018 年版译者序记载了两期课程的缘起和课堂经历。", "倪男奇担任翻译，并与刘霞共同参与助教工作；课堂中的体验和讨论，也与书中的情商教育方法形成呼应。"],
+        "link": "book-eq-coach.html", "link_text": "了解《情商教练手册》",
+    },
+    {
         "id": "quanzhou-2010", "year": "2010", "date": "11 月 4—8 日", "city": "泉州",
         "kind": "高校专业培训", "title": "华侨大学：七原则与梦工作",
         "intro": "华侨大学心理辅导中心的五天专题指导，将本性治疗原则与梦工作带入高校专业培训。",
@@ -92,15 +106,22 @@ def milestone_card(item):
 
 def build_archive_page(page, hero, section_head):
     body = hero("THE JOURNEY", "一条持续展开的学习之路", "从北京的高校讲座，到不同城市的工作坊与系统培训。沿着年份，走进米杉在中国的教学现场。", "课程沿革")
-    links = ''.join(f'<a href="#year-{year}">{year}</a>' for year in ("2000", "2010", "2013", "2025", "2026"))
+    years = ("2000", "2005", "2006", "2010", "2013", "2025", "2026")
+    links = ''.join(f'<a href="#year-{year}">{year}</a>' for year in years)
     body += f'''<section class="journey-opening section-space"><div class="container journey-opening-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>MICHEL IN CHINA</p><h2>从北京出发，<br>走进更多城市的课堂。</h2></div><div><p>米杉自 2000 年底起在北京从事咨询与教学。后来，梦工作、本性治疗和情商教育的课程在更多城市展开。首届筑基班与情商培训师认证班，让这段教学历程有了更连续的结构。</p><nav class="year-jump" aria-label="按年份查看课程历程">{links}</nav></div></div></section>'''
     body += '<section class="journey-main section-space"><div class="container"><div class="journey-rail">'
-    for year in ("2000", "2010", "2013", "2025", "2026"):
+    for year in years:
         cards = ''.join(milestone_card(item) for item in MILESTONES if item["year"] == year)
         body += f'<div class="journey-year" id="year-{year}"><div class="journey-year-label"><span>{year}</span><small>{"起点" if year == "2000" else "继续前行"}</small></div><div class="journey-year-cards">{cards}</div></div>'
     body += '</div></div></section>'
-    body += '''<section class="section-space city-journey"><div class="container"><p class="eyebrow"><span class="eyebrow-line"></span>PLACES ALONG THE WAY</p><h2>教学的足迹，不止于时间轴。</h2><p>从北方到西部，再到沿海与大湾区，这些城市都留下过本性治疗、梦工作或情商教育的交流与学习。</p><div class="city-route" aria-label="米杉在中国开展过教学交流的城市"><span>北京</span><span>石家庄</span><span>郑州</span><span>青岛</span><span>西安</span><span>兰州</span><span>乌鲁木齐</span><span>江门</span><span>深圳</span><span>东莞</span></div></div></section>
-<section class="section-space archive-visuals"><div class="container">''' + section_head("NEXT CHAPTER", "下一程，继续在现场相遇。", "2027 年春季课程") + '''<div class="archive-visual-grid"><a href="index.html#courses"><img src="assets/course-level-1.jpg" alt="2027 春季本性治疗一阶课程海报" loading="lazy"><span>本性治疗一阶 · 杭州 ↗</span></a><a href="index.html#courses"><img src="assets/course-dream.jpg" alt="2027 春季米杉梦工作坊海报" loading="lazy"><span>米杉梦工作坊 · 郑州 ↗</span></a><a href="index.html#courses"><img src="assets/course-level-2.jpg" alt="2027 春季本性治疗二阶课程海报" loading="lazy"><span>本性治疗二阶 · 郑州 ↗</span></a></div></div></section>'''
+    city_stops = (
+        ("北京", "dream-2005"), ("石家庄", None), ("郑州", "zhengzhou-2026"),
+        ("青岛", "qingdao-2026"), ("西安", None), ("兰州", None),
+        ("乌鲁木齐", None), ("江门", None), ("深圳", "south-2025"), ("东莞", "dongguan-2026"),
+    )
+    cities = ''.join(f'<a href="#{anchor}" aria-label="查看{city}的教学记录">{city}</a>' if anchor else f'<span>{city}</span>' for city, anchor in city_stops)
+    body += f'''<section class="section-space city-journey"><div class="container"><p class="eyebrow"><span class="eyebrow-line"></span>PLACES ALONG THE WAY</p><h2>教学的足迹，不止于时间轴。</h2><p>从北方到西部，再到沿海与大湾区，这些城市都留下过本性治疗、梦工作或情商教育的交流与学习。</p><div class="city-route" aria-label="米杉在中国开展过教学交流的城市">{cities}</div></div></section>
+<section class="section-space archive-visuals"><div class="container">''' + section_head("NEXT CHAPTER", "下一程，继续在现场相遇。", "2027 年春季课程") + '''<div class="archive-visual-grid"><a href="course-level-one.html"><img src="assets/course-level-1.jpg" alt="2027 春季本性治疗一阶课程海报" loading="lazy"><span>本性治疗一阶 · 杭州 ↗</span></a><a href="course-dream.html"><img src="assets/course-dream.jpg" alt="2027 春季米杉梦工作坊海报" loading="lazy"><span>米杉梦工作坊 · 郑州 ↗</span></a><a href="course-level-two.html"><img src="assets/course-level-2.jpg" alt="2027 春季本性治疗二阶课程海报" loading="lazy"><span>本性治疗二阶 · 郑州 ↗</span></a></div></div></section>'''
     page("课程沿革", "米杉在中国的高校讲座、本性治疗筑基班、梦工作坊与情商培训师认证班。", "archive.html", body)
 
 

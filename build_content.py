@@ -28,7 +28,7 @@ def header(active=""):
     )
     return f'''<a class="skip-link" href="#main">跳到正文</a>
 <header class="site-header"><div class="header-inner container">
-<a class="brand" href="index.html" aria-label="扎根本性，返回首页"><img src="assets/essence-logo.png" alt="" width="86" height="48"><span class="brand-name">扎根本性<span class="brand-en">ESSENCE THERAPY</span></span></a>
+<a class="brand" href="index.html" aria-label="扎根本性，返回首页"><img src="assets/essence-logo-web.png" alt="" width="86" height="48"><span class="brand-name">扎根本性<span class="brand-en">ESSENCE THERAPY</span></span></a>
 <button class="menu-toggle" type="button" aria-label="打开导航" aria-controls="site-nav" aria-expanded="false"><span></span><span></span><span></span></button>
 <nav class="site-nav" id="site-nav" aria-label="主导航">{links}<a class="nav-contact" href="index.html#contact">联系 / Contact</a></nav>
 </div></header>'''
@@ -46,7 +46,7 @@ def page(title, description, path, body, active=None, og_image="assets/mountain-
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#173d34">
 <meta name="description" content="{E(description)}"><link rel="canonical" href="{canonical}"><title>{E(title)}｜扎根本性</title>
 <meta property="og:type" content="website"><meta property="og:site_name" content="扎根本性"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="{canonical}"><meta property="og:title" content="{E(title)}｜扎根本性"><meta property="og:description" content="{E(description)}"><meta property="og:image" content="https://essencetherapy.cn/{E(og_image)}">
-{schema}<link rel="icon" type="image/png" href="assets/essence-logo.png"><link rel="stylesheet" href="styles.css"><script defer src="app.js"></script></head>
+{schema}<link rel="icon" type="image/png" href="assets/essence-logo-web.png"><link rel="stylesheet" href="styles.css"><script defer src="app.js"></script></head>
 <body id="top">{header(active or path)}<main id="main">{body}</main>{footer()}</body></html>'''
     (DIST / path).write_text(document, encoding="utf-8")
 
@@ -204,10 +204,12 @@ def update_home():
     text = text.replace('三场线下工作坊，分别从本性治疗的基础、梦工作与深入练习展开。选择你现在想走的那一步。', '三场线下工作坊分别聚焦本性治疗基础、梦工作与二阶深化。课程采用理论讲授、方法示范和小组实操相结合的形式。')
     text = text.replace('从自己开始，<br>走进本性治疗。', '本性治疗一阶：<br>核心方法入门')
     text = text.replace('认识内在空间，体验本性治疗的核心流程，在现场练习中建立初步的感受与理解。', '学习识别身体感受、区分受伤与资源性的内在空间，并通过示范和小组练习认识本性治疗的核心流程。')
+    text = text.replace('学习识别身体感受、区分受伤与资源性的内在空间，并通过示范和小组练习认识本性治疗的核心流程。', '从身体感受进入，认识内在小孩与内在父母资源，并在示范、练习中学习本性治疗的基础方法。')
     text = text.replace('从梦出发，<br>听见内在的语言。', '米杉梦工作坊：<br>转译与内在工作')
     text = text.replace('以梦为入口，探索梦与内在空间之间的联系，体验梦工作的学习路径。', '学习梦境元素的理解与转译，并以梦为素材探索受伤与资源性的内在空间。')
     text = text.replace('让内在工作，<br>走得更深一些。', '本性治疗二阶：<br>深化方法实践')
     text = text.replace('在一阶基础上继续学习与练习本性治疗的方法，深化对内在过程的理解。', '在一阶基础上继续学习本性治疗核心流程，并深化年龄回溯、情绪转化与内在资源锚定的练习。')
+    text = text.replace('在一阶基础上继续学习本性治疗核心流程，并深化年龄回溯、情绪转化与内在资源锚定的练习。', '在一阶基础上，学习年龄回溯、情绪转化与认知重构，并通过个案演示和督导反馈深化练习。')
     text = text.replace('从这里，<br>继续你的探索。', '课程咨询与<br>内容订阅')
     text = text.replace('想了解课程、报名方式，或找到适合自己的学习入口？扫码联系小扎，告诉我们你现在最想了解什么。', '了解课程内容、报名方式与学习路径，可扫描二维码联系小扎；公众号「扎根本性」持续更新方法文章与课程资料。')
     text = text.replace('把力量带回生活', '本性治疗方法与课程')
