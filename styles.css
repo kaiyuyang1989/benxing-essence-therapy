@@ -283,6 +283,11 @@ h2{font-family:var(--serif);font-size:clamp(37px,3.7vw,54px);font-weight:500;let
 @media(max-width:550px){.forthcoming-grid{align-items:flex-start}.forthcoming-mark{width:80px;height:80px;font-size:14px}.forthcoming-grid h2{font-size:32px}.teacher-photo-story-image{height:390px}.journey-opening p:not(.eyebrow){font-size:16px}.journey-card{display:block;padding:22px}.journey-stamp{border-right:0;border-bottom:1px solid #dce4d8;flex-direction:row;align-items:baseline;padding-bottom:10px;margin-bottom:12px}.journey-card h3{font-size:24px}.journey-year-label span{font-size:31px}.city-route{gap:9px}.city-route span{min-width:0;font-size:15px;padding:8px 16px}}
 
 /* Course pathways and publication journey */
+.journey-card[id]{scroll-margin-top:100px}.journey-card:target{outline:2px solid #b58d55;outline-offset:5px}
+.city-route a{position:relative;min-width:140px;text-align:center;padding:12px 25px;border:1px solid rgba(207,222,195,.7);border-radius:100px;background:rgba(255,255,255,.11);font-family:var(--serif);font-size:18px;color:#eff1df;text-decoration:none;transition:background .2s,border-color .2s}
+.city-route a:after{content:"";position:absolute;left:50%;bottom:-18px;width:4px;height:4px;border-radius:50%;background:#cbb680}.city-route a:hover,.city-route a:focus-visible{background:rgba(255,255,255,.23);border-color:#ead5a7;outline-color:#ead5a7}
+@media(max-width:760px){.city-route a{min-width:112px}}
+@media(max-width:550px){.city-route a{min-width:0;font-size:15px;padding:8px 16px}}
 .site-nav{gap:15px}.site-nav a{font-size:13px}
 .hero{background-image:linear-gradient(90deg,rgba(22,55,45,.93),rgba(22,55,45,.42)),url("assets/mountain-dawn-web.jpg")}
 .nature-page{background-image:linear-gradient(90deg,rgba(248,246,237,.94) 0%,rgba(248,246,237,.82) 47%,rgba(248,246,237,.18) 100%),url("assets/misty-hills-web.jpg")}
