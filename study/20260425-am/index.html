@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="天仇训练营 25 号上午学习资料：按章节检索课堂笔记，前往原飞书妙记收听录音和查看文字记录。">
+  <title>25 号上午｜天仇训练营学习页</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="content.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#reader">跳到学习内容</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="返回页面顶部">
+        <span class="brand-mark" aria-hidden="true">学</span>
+        <span class="brand-name">课堂学习档案</span>
+      </a>
+      <a class="source-link" id="sourceLinkTop" href="https://ewbmxoqgfx.feishu.cn/minutes/obcn83sk3afyb2h475uyaq13" target="_blank" rel="noopener noreferrer">查看原始飞书妙记</a>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="pageTitle">
+        <div class="hero-copy">
+          <div class="eyebrow">天仇训练营 · 单场资料</div>
+          <h1 id="pageTitle">25 号上午</h1>
+          <p class="hero-intro">按课堂脉络查找笔记，点击原飞书妙记收听录音、查看带时码的文字记录。</p>
+          <div class="status-list" aria-label="资料状态">
+            <span class="status is-ready">课堂笔记已收录</span>
+            <span class="status is-pending" id="audioHeroStatus">原录音在飞书</span>
+            <span class="status is-pending" id="transcriptHeroStatus">本页无独立逐字稿</span>
+          </div>
+        </div>
+        <div class="hero-side" aria-label="资料说明">
+          <div class="meta-label">当前可阅读</div>
+          <div class="meta-value">用户课堂笔记</div>
+          <p>保留用户提供的笔记文字顺序，未与原音逐句核对。原笔记的 13 处过期图片链接已改为占位。</p>
+          <span class="meta-foot">此页仅包含 25 号上午这一场</span>
+        </div>
+      </section>
+
+      <section class="media-card" aria-labelledby="audioHeading">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">听课</span>
+            <h2 id="audioHeading">收听原录音</h2>
+          </div>
+          <span class="pill" id="audioStatus">跳转飞书</span>
+        </div>
+        <p class="media-help" id="audioHelp">这页没有重新托管录音。原飞书妙记可播放 3:34:55 的录音，并可查看它已有的文字记录。</p>
+        <audio id="audioPlayer" preload="metadata" hidden>浏览器不支持音频播放。</audio>
+        <div class="player" id="continuousPlayer" aria-label="连续录音播放器" hidden>
+          <button class="play-button" id="playButton" type="button" aria-label="播放录音">播放</button>
+          <div class="player-middle">
+            <label class="visually-hidden" for="globalSeek">录音全程时间轴</label>
+            <input id="globalSeek" type="range" min="0" max="1" value="0" step="0.1" aria-valuetext="0:00">
+            <div class="player-meta">
+              <output id="globalTime" for="globalSeek">0:00 / 3:34:55</output>
+              <span id="currentPart"></span>
+            </div>
+          </div>
+          <label class="rate-control">倍速
+            <select id="playbackRate" aria-label="播放速度">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+        <details class="playlist-details" id="playlistDetails" hidden>
+          <summary>查看分段顺序</summary>
+          <ol id="playlistList"></ol>
+        </details>
+        <div class="media-actions">
+          <a class="button button-primary" id="sourceLinkAudio" href="https://ewbmxoqgfx.feishu.cn/minutes/obcn83sk3afyb2h475uyaq13" target="_blank" rel="noopener noreferrer">去飞书收听并查看文字记录</a>
+          <input hidden id="audioFile" type="file" accept="audio/*" multiple>
+        </div>
+        <p class="fine-print">本站提供笔记检索与章节导航。录音和飞书文字记录仍由原妙记页面提供。</p>
+      </section>
+
+      <section class="study-layout" id="reader" aria-label="学习内容">
+        <aside class="toc-card" aria-labelledby="tocHeading">
+          <div class="toc-header">
+            <span class="section-kicker">导航</span>
+            <h2 id="tocHeading">章节目录</h2>
+          </div>
+          <p class="toc-help">点章节定位笔记。原笔记没有录音时码。</p>
+          <nav id="chapterNav" aria-label="笔记章节"></nav>
+        </aside>
+
+        <div class="reading-card">
+          <div class="reader-toolbar">
+            <div class="tabs" role="tablist" aria-label="选择阅读内容">
+              <button class="tab is-active" id="notesTab" type="button" role="tab" aria-selected="true" aria-controls="notesPanel">课堂笔记</button>
+              <button class="tab" id="transcriptTab" type="button" role="tab" aria-selected="false" aria-controls="transcriptPanel">文字记录入口</button>
+            </div>
+            <label class="search-field">
+              <span class="visually-hidden">搜索当前内容</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m15.6 15.6 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input id="searchInput" type="search" placeholder="搜索当前内容" autocomplete="off">
+            </label>
+          </div>
+          <div class="search-summary" id="searchSummary" aria-live="polite"></div>
+
+          <section class="read-panel" id="notesPanel" role="tabpanel" aria-labelledby="notesTab">
+            <div class="reading-intro">
+              <div>
+                <span class="section-kicker">用户笔记 · 未核原音</span>
+                <h2>课堂笔记</h2>
+                <p>保留 25 号上午笔记文字顺序。个别句子在原笔记中未完结；13 个已过期图片地址已替换为“图片待补”。</p>
+              </div>
+              <div class="note-actions">
+                <button class="text-action" id="copyNotes" type="button">复制笔记</button>
+                <a class="text-action" href="%E7%94%A8%E6%88%B7%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0_25%E5%8F%B7%E4%B8%8A%E5%8D%88.md" download>下载本页 Markdown</a>
+              </div>
+            </div>
+            <article class="note-body" id="noteBody"></article>
+          </section>
+
+          <section class="read-panel" id="transcriptPanel" role="tabpanel" aria-labelledby="transcriptTab" hidden>
+            <div class="reading-intro">
+              <div>
+                <span class="section-kicker">原站资料</span>
+                <h2>飞书文字记录</h2>
+                <p>原妙记有带时码的文字记录。本页没有独立逐字稿。</p>
+              </div>
+            </div>
+            <div class="empty-state" id="transcriptEmpty">
+              <div class="empty-symbol" aria-hidden="true">文</div>
+              <h3>在飞书查看文字记录</h3>
+              <p>目前只有用户课堂笔记，尚无可放在本站检索的完整逐字稿。请在原妙记页面阅读带时码的文字记录。</p>
+              <a class="button button-primary" id="sourceLinkTranscript" href="https://ewbmxoqgfx.feishu.cn/minutes/obcn83sk3afyb2h475uyaq13" target="_blank" rel="noopener noreferrer">打开飞书文字记录</a>
+              <input hidden id="transcriptFile" type="file" accept=".json,.srt,.vtt,.txt,text/plain,application/json">
+            </div>
+            <div class="transcript-list" id="transcriptList" hidden></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>天仇训练营 · 25 号上午学习资料</span>
+      <span>来源：<a id="sourceLinkFooter" href="https://ewbmxoqgfx.feishu.cn/minutes/obcn83sk3afyb2h475uyaq13" target="_blank" rel="noopener noreferrer">飞书妙记《新录音_2》</a>与用户提供的课堂笔记；图片链接已省略</span>
+    </footer>
+  </div>
+</body>
+</html>
