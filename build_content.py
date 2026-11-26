@@ -13,17 +13,18 @@ E = html.escape
 
 def header(active=""):
     items = [
-        ("approach.html", "认识本性", "Approach"),
-        ("teacher.html", "认识米杉", "Michel"),
-        ("reading.html", "米杉著作", "Books"),
-        ("insights.html", "经典文章", "Articles"),
-        ("archive.html", "课程沿革", "Archive"),
-        ("watch.html", "影像与声音", "Media"),
-        ("voices.html", "我们的理念", "Philosophy"),
+        ("approach.html", "本性治疗"),
+        ("courses.html", "课程"),
+        ("teacher.html", "米杉"),
+        ("reading.html", "著作"),
+        ("insights.html", "文章"),
+        ("archive.html", "教学历程"),
+        ("watch.html", "影像"),
+        ("voices.html", "理念"),
     ]
     links = "".join(
-        f'<a href="{url}"{(" aria-current=" + chr(34) + "page" + chr(34)) if active == url else ""}>{name} <small lang="en">{en}</small></a>'
-        for url, name, en in items
+        f'<a href="{url}"{(" aria-current=" + chr(34) + "page" + chr(34)) if active == url else ""}>{name}</a>'
+        for url, name in items
     )
     return f'''<a class="skip-link" href="#main">跳到正文</a>
 <header class="site-header"><div class="header-inner container">
@@ -37,11 +38,15 @@ def footer():
     return '''<footer class="site-footer"><div class="container footer-inner"><div><strong>扎根本性</strong><p>本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.</p><div class="footer-links"><a href="index.html">首页</a><a href="approach.html">本性治疗</a><a href="teacher.html">米杉</a><a href="reading.html">著作</a><a href="archive.html">课程沿革</a><a href="watch.html">影像</a><a href="index.html#contact">联系</a></div></div><div class="footer-meta"><span>奇毓教育科技（杭州）有限公司</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026078107号-1</a><span>© <span id="year">2026</span> 扎根本性</span></div></div></footer>'''
 
 
-def page(title, description, path, body, active=None):
+def page(title, description, path, body, active=None, og_image="assets/mountain-dawn-web.jpg", structured_data=None):
+    canonical = f"https://essencetherapy.cn/{path}"
+    schema_json = json.dumps(structured_data, ensure_ascii=False).replace("</", "<\\/") if structured_data else ""
+    schema = f'<script type="application/ld+json">{schema_json}</script>' if schema_json else ""
     document = f'''<!doctype html><html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#173d34">
-<meta name="description" content="{E(description)}"><link rel="canonical" href="https://essencetherapy.cn/{path}"><title>{E(title)}｜扎根本性</title>
-<link rel="icon" type="image/png" href="assets/essence-logo.png"><link rel="stylesheet" href="styles.css"><script defer src="app.js"></script></head>
+<meta name="description" content="{E(description)}"><link rel="canonical" href="{canonical}"><title>{E(title)}｜扎根本性</title>
+<meta property="og:type" content="website"><meta property="og:site_name" content="扎根本性"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="{canonical}"><meta property="og:title" content="{E(title)}｜扎根本性"><meta property="og:description" content="{E(description)}"><meta property="og:image" content="https://essencetherapy.cn/{E(og_image)}">
+{schema}<link rel="icon" type="image/png" href="assets/essence-logo.png"><link rel="stylesheet" href="styles.css"><script defer src="app.js"></script></head>
 <body id="top">{header(active or path)}<main id="main">{body}</main>{footer()}</body></html>'''
     (DIST / path).write_text(document, encoding="utf-8")
 
@@ -63,11 +68,25 @@ def bookshop_code():
     return '''<div class="bookshop-panel"><div class="bookshop-copy"><p class="eyebrow"><span class="eyebrow-line"></span>WECHAT BOOKSHOP</p><h3>选购米杉著作</h3><p>微信扫一扫，进入世界图书出版公司小店选购米杉著作。</p><p class="bookshop-mobile-hint">手机浏览可长按图片识别。</p></div><a class="bookshop-code" href="assets/wechat-books-shop.jpg" target="_blank" rel="noopener" aria-label="打开微信小店购书码原图"><img src="assets/wechat-books-shop.jpg" alt="世界图书出版公司微信小店购书码" loading="lazy"></a></div>'''
 
 
+def publication_journey():
+    stages = [
+        ("2000年代", "情商课堂与早期著作", "米杉在中国写作的情商课堂著作，早期曾以《应该补上的一课》出版。它后来持续修订，发展为今天读到的《情商教练手册》。", "book-eq-coach.html", "读《情商教练手册》"),
+        ("2010", "梦的真相", "《梦的真相》早期中文版出版。书中以梦者的亲身经验为起点，讨论记录梦、理解梦境和开展内在工作。", "book-dream.html", "走进梦工作"),
+        ("2013", "内在空间与儿童情商教育", "《内在父母与内在小孩的拥抱》和《儿童情商教育》分别从个人成长与儿童教育出发，拓宽了这些方法的阅读入口。", "book-inner-child.html", "读《内在父母与内在小孩的拥抱》"),
+        ("2018—2019", "情商教学与本性治疗", "《情商教练手册》在 2018 年出版；2019 年版《由心咨询》系统讨论本性治疗的咨询关系、原则与工作过程。", "book-heart.html", "读《由心咨询》"),
+        ("2021—2022", "面向家庭与新一代读者", "《育儿先育己》、新版《梦的真相》与新版《儿童情商教育》陆续出版，分别回应养育、梦工作与儿童社会情感学习。", "book-parenting.html", "读《育儿先育己》"),
+    ]
+    cards = "".join(f'<article class="publication-step"><span class="publication-year">{E(year)}</span><div><h3>{E(title)}</h3><p>{E(summary)}</p><a class="text-link" href="{link}">{E(label)} ↗</a></div></article>' for year, title, summary, link, label in stages)
+    return f'''<section class="section-space publication-journey" id="publication-journey"><div class="container">{section_head("A READING JOURNEY", "从早期著作，到今天的六部书", "同一部作品曾以不同书名或新版面世。沿着出版时间阅读，也能看见米杉持续发展的工作。")}
+<div class="publication-steps">{cards}</div><div class="publication-links"><a href="book-eq-coach.html">情商教育 ↗</a><a href="book-dream.html">梦工作 ↗</a><a href="book-heart.html">本性治疗 ↗</a><a href="book-child-eq.html">儿童情商教育 ↗</a></div></div></section>'''
+
+
 def build_books():
     cards = "".join(book_card(book, i) for i, book in enumerate(BOOKS, 1))
     body = hero("BOOKS & WRITING", "米杉中文著作", "六部公开出版著作，涵盖本性治疗、梦工作、情商教育与养育。", "米杉著作")
     body += f'''<section class="section-space reading-profile"><div class="container profile-grid"><div class="profile-photo"><img src="assets/michel-life-web.jpg" alt="米杉老师坐在室内的生活照" loading="lazy"></div><div><p class="eyebrow"><span class="eyebrow-line"></span>MEET THE AUTHOR</p><h2>米杉 <span lang="fr">Michel Claeys Bouuaert</span></h2><p>比利时心理治疗师、本性治疗创始人，长期从事情商与社会情感教育。他的著作涵盖本性治疗方法、梦工作和面向家庭与教育者的实践。</p><a class="text-link" href="teacher.html">认识米杉与他的经历 ↗</a></div></div></section>
 <section class="section-space book-section" id="published"><div class="container">{section_head('PUBLISHED IN CHINESE', '中文出版著作', '从本性治疗、梦工作到情商教育与养育，沿着不同主题阅读米杉。')}<div class="catalog-grid">{cards}</div></div></section>
+{publication_journey()}
 <section class="section-space bookshop-section"><div class="container">{bookshop_code()}</div></section>
 <section class="section-space forthcoming-book"><div class="container forthcoming-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>FORTHCOMING / 新著</p><h2>《情绪智能时代》</h2><p>米杉正在出版中的新著。关于情绪智能的下一部作品，敬请关注后续出版消息。</p></div><span class="forthcoming-mark">出版中</span></div></section>
 <section class="section-space quote-gallery-section" id="quotes"><div class="container">{section_head('BOOK EXCERPTS', '从著作继续阅读')}<p class="section-lead">从《内在父母与内在小孩的拥抱》的短句进入，再回到原书阅读完整论述。</p><div class="quote-gallery"><a href="assets/quote-inner-022.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-022.jpg" alt="《内在父母与内在小孩的拥抱》摘录卡片" loading="lazy"><span>著作摘录 01 ↗</span></a><a href="assets/quote-inner-030.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-030.jpg" alt="《内在父母与内在小孩的拥抱》摘录卡片" loading="lazy"><span>著作摘录 02 ↗</span></a><a href="assets/quote-inner-015.jpg" target="_blank" rel="noopener"><img src="assets/quote-inner-015.jpg" alt="《内在父母与内在小孩的拥抱》摘录卡片" loading="lazy"><span>著作摘录 03 ↗</span></a></div><p class="source-note"><a href="https://kaiyuyang1989.github.io/mishan-quote-cards/" target="_blank" rel="noopener">浏览更多著作卡片 ↗</a></p></div></section>'''
@@ -78,7 +97,15 @@ def build_books():
         body = hero("THE BOOKS", E(book["title"]), E(book["topic"]), "米杉著作")
         focus = "".join(f'<li>{E(item)}</li>' for item in book["focus"])
         body += f'''<section class="section-space book-detail"><div class="container book-detail-grid"><div class="book-detail-cover">{cover}</div><div class="book-detail-copy"><p class="eyebrow"><span class="eyebrow-line"></span>{E(book['year'])} · {E(book['publisher'])}</p><h2>{E(book['title'])}</h2><p class="book-detail-subtitle">{E(book['subtitle'])}</p><p class="lead">{E(book['summary'])}</p><h3>内容介绍</h3><p>{E(book['about'])}</p><h3>本书关注</h3><ul class="book-focus">{focus}</ul><h3>适合谁阅读</h3><p>{E(book['reading'])}</p><h3>书目信息</h3><dl><div><dt>作者</dt><dd>米杉 Michel Claeys Bouuaert</dd></div><div><dt>出版年份</dt><dd>{E(book['year'])}</dd></div><div><dt>出版社</dt><dd>{E(book['publisher'])}</dd></div><div><dt>ISBN</dt><dd>{E(book['isbn'])}</dd></div></dl>{bookshop_code()}</div></div></section><section class="section-space related"><div class="container">{section_head('KEEP EXPLORING', '继续阅读')}<div class="related-grid"><a href="reading.html"><small>ALL BOOKS</small><strong>全部著作</strong><span>回到书目 ↗</span></a><a href="teacher.html"><small>THE AUTHOR</small><strong>认识米杉</strong><span>经历与教学 ↗</span></a><a href="approach.html"><small>THE APPROACH</small><strong>认识本性治疗</strong><span>从方法开始 ↗</span></a></div></div></section>'''
-        page(book["title"], f'米杉《{book["title"]}》内容介绍与微信扫码购书入口。', f'book-{book["slug"]}.html', body, "reading.html")
+        image = f'assets/books/{book["image"]}' if book["image"] != "poster-crop" else "assets/mountain-dawn-web.jpg"
+        book_schema = {
+            "@context": "https://schema.org", "@type": "Book", "name": book["title"],
+            "author": {"@type": "Person", "name": "米杉", "alternateName": "Michel Claeys Bouuaert"},
+            "inLanguage": "zh-CN", "isbn": book["isbn"], "datePublished": book["year"],
+            "publisher": {"@type": "Organization", "name": book["publisher"]},
+            "url": f'https://essencetherapy.cn/book-{book["slug"]}.html',
+        }
+        page(book["title"], f'米杉《{book["title"]}》内容介绍与微信扫码购书入口。', f'book-{book["slug"]}.html', body, "reading.html", image, book_schema)
 
 
 def build_teacher():
@@ -123,7 +150,7 @@ def update_home():
     text = text.replace('七种著作，<br>从你关心的那本读起。', '六部著作，<br>从原书认识本性。')
     text = text.replace('七种中文出版物，逐本介绍。', '六部中文出版物，逐本介绍。')
     text = text.replace('七种已核实的中文出版著作', '六部中文出版著作')
-    new_nav = '''      <nav class="site-nav" id="site-nav" aria-label="主导航"><a href="approach.html">认识本性 <small lang="en">Approach</small></a><a href="teacher.html">认识米杉 <small lang="en">Michel</small></a><a href="reading.html">米杉著作 <small lang="en">Books</small></a><a href="insights.html">经典文章 <small lang="en">Articles</small></a><a href="archive.html">课程沿革 <small lang="en">Archive</small></a><a href="watch.html">影像与声音 <small lang="en">Media</small></a><a href="voices.html">我们的理念 <small lang="en">Philosophy</small></a><a class="nav-contact" href="#contact">联系 / Contact</a></nav>'''
+    new_nav = '      ' + re.search(r'<nav class="site-nav".*?</nav>', header(), flags=re.S).group().replace('href="index.html#contact"', 'href="#contact"')
     text = re.sub(r'      <nav class="site-nav"[^>]*>.*?</nav>', new_nav, text, count=1, flags=re.S)
     text = text.replace('向内走，<br><em>把力量带回生活。</em>', '本性治疗，<br><em>从真实感受开始。</em>')
     text = text.replace('从此刻的身体感受开始，认识自己的内在空间；在一次次练习中，学习与自己相处，也把新的选择带回日常。', '米杉创立的本性治疗，以身体感受为入口，辨认受伤与资源性的内在空间，并通过持续练习，把新的理解带回生活。')
