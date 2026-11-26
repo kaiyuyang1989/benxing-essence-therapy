@@ -42,6 +42,41 @@ dialog?.addEventListener('close', () => {
 
 document.querySelector('#year')?.replaceChildren(String(new Date().getFullYear()));
 
+const journeyFilters = [...document.querySelectorAll('[data-journey-filter]')];
+if (journeyFilters.length) {
+  const cards = [...document.querySelectorAll('.journey-card[data-track]')];
+  const years = [...document.querySelectorAll('.journey-year')];
+  const status = document.querySelector('#journey-filter-status');
+  const applyJourneyFilter = filter => {
+    let shown = 0;
+    cards.forEach(card => {
+      card.hidden = filter !== 'all' && !card.dataset.track.split(' ').includes(filter);
+      if (!card.hidden) shown += 1;
+    });
+    years.forEach(year => { year.hidden = !year.querySelector('.journey-card:not([hidden])'); });
+    journeyFilters.forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.journeyFilter === filter));
+    });
+    if (status) status.textContent = `显示 ${shown} 条教学记录`;
+  };
+  journeyFilters.forEach(button => {
+    button.addEventListener('click', () => applyJourneyFilter(button.dataset.journeyFilter));
+  });
+  const showHashTarget = () => {
+    const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (!target || !target.closest('.journey-main')) return;
+    if (target.hidden || target.closest('.journey-year[hidden]')) applyJourneyFilter('all');
+    if (target.classList.contains('journey-card')) {
+      const details = target.querySelector('details');
+      if (details) details.open = true;
+    }
+    requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+  };
+  applyJourneyFilter('all');
+  if (location.hash) showHashTarget();
+  window.addEventListener('hashchange', showHashTarget);
+}
+
 const mediaList = document.querySelector('#media-list');
 if (mediaList) {
   fetch('media.json')

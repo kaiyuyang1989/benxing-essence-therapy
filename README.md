@@ -1,6 +1,6 @@
 # 扎根本性网站
 
-静态展示网站。入口是 `dist/index.html`。包括方法、2027 春季课程总览及三门课程详情、米杉介绍、六本书独立介绍、出版中的《情绪智能时代》、文章、课程历程和影像等页面。`build_content.py`、`build_courses.py`、`build_journey.py` 和 `build_editorial.py` 用于更新生成页。
+静态展示网站。入口是 `dist/index.html`。包括方法、2027 春季课程总览及三门课程详情、米杉介绍、六本书独立介绍、出版中的《情绪智能时代》、文章、专题阅读、教学历程和影像等页面。`build_content.py`、`build_guide.py`、`build_courses.py`、`build_journey.py` 和 `build_editorial.py` 用于更新生成页。
 
 ## 内容依据
 
@@ -20,11 +20,12 @@
 - 公开范围：现有课堂合影、学员逐字反馈和短视频组试切片段在资料库中仍标为“公开授权待核”，因此这版官网没有发布。`voices.html` 使用团队理念文字。
 - 著作出版脉络：男奇 2026-11-26 在「米杉研读社项目组」分享的版本总目录可用于检索，但本人提示尚待修订。官网只采用经原书版权页、用户确认海报与现行书目核对的条目；未发布该待修订海报原图。核对详情见 `docs/book-poster-review-2026-11-26.md`。
 - 四阶段诊断、技术改动与数据观察计划见 `docs/site-audit-2026-11-26.md`。
+- 2026-11-27 内容、视觉与交互升级依据见 `docs/editorial-design-2026-11-27.md`；高校原始资料在教师页与专题页直接可读，北师大 2013 年资料明确标为讲座预告。
 - 公共页使用 320 像素宽的 Logo 网页图，原始 Logo 留存于 `dist/assets/essence-logo.png`；46 KB 网页图替代每页加载的 618 KB 原图。
 
 ## 更新方式
 
-改动页面内容后，依次运行 `python3 build_content.py`、`python3 build_editorial.py`、`python3 build_courses.py`、`python3 tools/finalize_site.py`、`python3 tools/audit_site.py` 和 `python3 check_public_copy.py`，再本机预览并检查桌面与手机宽度。课程日期、价格和海报必须与当期事实表同步。六本书以用户提供的 `WechatIMG5362.jpg` 海报所列版本为准；旧名《情商魔法训练营》不再另列。`梦的真相` 用 2021 年版，`儿童情商教育` 用 2022 年版；`内在父母与内在小孩的拥抱` 暂用海报局部呈现，封面对应印次待出版社核实并补高清图。每本提供独立介绍和统一微信小店扫码购书入口，本站不提供图书下载。图书尚未在自家微信小店作为自营商品上架。制作说明只留在仓库文档，不进入对外页面。
+改动页面内容后，依次运行 `python3 build_content.py`、`python3 build_guide.py`、`python3 build_editorial.py`、`python3 build_courses.py`、`python3 tools/finalize_site.py`、`python3 tools/audit_site.py` 和 `python3 check_public_copy.py`，再本机预览并检查桌面与手机宽度。课程日期、价格和海报必须与当期事实表同步。六本书以用户提供的 `WechatIMG5362.jpg` 海报所列版本为准；旧名《情商魔法训练营》不再另列。`梦的真相` 用 2021 年版，`儿童情商教育` 用 2022 年版；`内在父母与内在小孩的拥抱` 暂用海报局部呈现，封面对应印次待出版社核实并补高清图。每本提供独立介绍和统一微信小店扫码购书入口，本站不提供图书下载。图书尚未在自家微信小店作为自营商品上架。制作说明只留在仓库文档，不进入对外页面。
 
 以后增加一个公开节目，只需在 `dist/media.json` 的 `items` 数组中复制一条记录，修改 `kind`（`video` 或 `audio`）、语言、标题、简介、来源与 HTTPS 原节目网址；`watch.html` 会自动生成卡片，不需要改页面布局。上站前核对节目已公开、内容与署名准确，网站只做跳转。新的学员原话或课堂人物照片须先核清官网使用范围。
 
