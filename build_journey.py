@@ -110,6 +110,14 @@ MILESTONES = [
         "link": "book-heart.html", "link_text": "读《由心咨询》",
     },
     {
+        "id": "eq-level-one-2026", "year": "2026", "date": "8 月 11—16 日", "city": "北京",
+        "kind": "情商教育培训师一阶", "title": "六天，从体验走向课程设计",
+        "intro": "米杉情商教育培训师一阶在北京展开，把个人体验、教学观察和活动设计连成一条学习路径。",
+        "details": ["六天依次围绕信任、沟通、自我觉察、反馈、合作与课程设计展开。", "学员在活动中体验情绪与关系，也观察带领者如何组织课堂、回应团体。"],
+        "image": "eq1-beijing-group-practice-2026.jpg", "image_alt": "2026 年 8 月北京情商培训师一阶团体练习",
+        "link": "course-eq-level-one.html", "link_text": "阅读一阶课程专题",
+    },
+    {
         "id": "qingdao-association-2026", "year": "2026", "date": "10 月 24—25 日", "city": "青岛",
         "kind": "学术年会与工作坊", "title": "青岛精神分析协会：年龄回溯",
         "intro": "米杉在青岛精神分析协会学术年会开展年龄回溯主题分享，并带领体验工作坊。",
@@ -131,13 +139,14 @@ MILESTONES = [
         "intro": "北京的认证班将情绪教育与团体带领放进连续训练和实践。",
         "details": ["课程面向希望在教育与团体场景中应用情商教育方法的学习者。", "从理解情绪到设计活动、带领团体，训练关注方法如何进入真实关系。"],
         "image": "beijing-eq-2026.jpg", "image_alt": "2026 年 11 月 3 日至 8 日北京米杉情商培训师认证班二阶合影",
-        "link": "book-eq-coach.html", "link_text": "读《情商教练手册》",
+        "link": "eq-alliance.html", "link_text": "认识培训师联盟",
     },
     {
         "id": "zhengzhou-2026", "year": "2026", "date": "11 月 13—15 日", "city": "郑州",
         "kind": "本性治疗一阶", "title": "从身份、情绪到内在资源",
         "intro": "郑州一阶按三天展开：认识身份与内在空间，识别情绪，练习联结资源。",
         "details": ["第一天：探索“我是谁”，辨认受伤与资源性的内在空间。", "第二天：从身体感受进入，观察情绪能量与核心工作流程。", "第三天：练习联结内在父母和资源空间，并讨论如何在生活中整合。"],
+        "image": "zhengzhou-level-one-group-2026.jpg", "image_alt": "2026 年 11 月 13 日至 15 日郑州本性治疗一阶课堂合影",
         "link": "approach.html", "link_text": "认识本性治疗",
     },
 ]
@@ -148,7 +157,7 @@ TRACKS = {
     "eq-class-2006": "education university", "quanzhou-2010": "therapy dream university",
     "beijing-2013": "dream university", "zhengzhou-2017": "therapy", "zhengzhou-2019": "therapy", "cohort-2025": "therapy",
     "south-2025": "therapy", "dream-2025": "dream", "beijing-regression-2025": "therapy", "dongguan-2026": "therapy",
-    "pku-shenzhen-2026": "education university", "dongguan-space-2026": "therapy", "beijing-2026": "therapy", "qingdao-association-2026": "therapy university", "qingdao-2026": "dream",
+    "pku-shenzhen-2026": "education university", "dongguan-space-2026": "therapy", "beijing-2026": "therapy", "eq-level-one-2026": "education", "qingdao-association-2026": "therapy university", "qingdao-2026": "dream",
     "eq-2026": "education", "zhengzhou-2026": "therapy",
 }
 
@@ -170,6 +179,7 @@ def build_archive_page(page, hero, section_head):
         cards = ''.join(milestone_card(item) for item in MILESTONES if item["year"] == year)
         body += f'<div class="journey-year" id="year-{year}"><div class="journey-year-label"><span>{year}</span></div><div class="journey-year-cards">{cards}</div></div>'
     body += '</div></div></section>'
+    body += '''<section class="section-space archive-classroom" id="classroom"><div class="container">''' + section_head("CLASSROOM ARCHIVE", "课堂里的不同现场", "从北京到青岛、郑州，照片记录下讲授、团体活动与课程合影。") + '''<div class="archive-classroom-grid"><a href="course-eq-level-one.html"><img src="assets/eq1-beijing-michel-teaching-2026.jpg" alt="米杉在 2026 年北京情商一阶课堂教学" loading="lazy"><span>北京 · 情商一阶</span><strong>从情绪觉察走向活动设计 ↗</strong></a><a href="eq-alliance.html"><img src="assets/beijing-eq-2026.jpg" alt="2026 年北京情商二阶课堂合影" loading="lazy"><span>北京 · 情商二阶</span><strong>在带领与反馈中继续学习 ↗</strong></a><a href="#qingdao-2026"><img src="assets/qingdao-dream-circle-2026.jpg" alt="2026 年青岛梦工作坊围圈练习" loading="lazy"><span>青岛 · 梦工作坊</span><strong>从梦境进入共同探索 ↗</strong></a><a href="#zhengzhou-2026"><img src="assets/zhengzhou-level-one-group-2026.jpg" alt="2026 年郑州本性治疗一阶合影" loading="lazy"><span>郑州 · 本性治疗一阶</span><strong>三天课程的集体留影 ↗</strong></a></div></div></section>'''
     city_stops = (
         ("北京", "dream-2005"), ("泉州", "quanzhou-2010"), ("石家庄", None), ("郑州", "zhengzhou-2017"),
         ("青岛", "qingdao-association-2026"), ("西安", None), ("兰州", None),

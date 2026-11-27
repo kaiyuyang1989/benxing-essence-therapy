@@ -15,6 +15,7 @@ def header(active=""):
     items = [
         ("approach.html", "本性治疗"),
         ("courses.html", "课程"),
+        ("course-eq-level-one.html", "情商教育"),
         ("teacher.html", "米杉"),
         ("nanni.html", "倪男奇"),
         ("reading.html", "著作"),
@@ -38,7 +39,7 @@ def header(active=""):
 
 
 def footer():
-    return '''<footer class="site-footer"><div class="container footer-inner"><div><strong>扎根本性</strong><p>本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.</p><div class="footer-links"><a href="index.html">首页</a><a href="approach.html">本性治疗</a><a href="teacher.html">米杉</a><a href="nanni.html">倪男奇</a><a href="reading.html">著作</a><a href="guide.html">专题阅读</a><a href="archive.html">教学历程</a><a href="partners.html">合作网络</a><a href="watch.html">影像</a><a href="index.html#contact">联系</a></div></div><div class="footer-meta"><span>奇毓教育科技（杭州）有限公司</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026078107号-1</a><span>© <span id="year">2026</span> 扎根本性</span></div></div></footer>'''
+    return '''<footer class="site-footer"><div class="container footer-inner"><div><strong>扎根本性</strong><p>本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.</p><div class="footer-links"><a href="index.html">首页</a><a href="approach.html">本性治疗</a><a href="course-eq-level-one.html">情商一阶</a><a href="eq-alliance.html">培训师联盟</a><a href="teacher.html">米杉</a><a href="nanni.html">倪男奇</a><a href="reading.html">著作</a><a href="guide.html">专题阅读</a><a href="archive.html">教学历程</a><a href="partners.html">合作网络</a><a href="watch.html">影像</a><a href="index.html#contact">联系</a></div></div><div class="footer-meta"><span>奇毓教育科技（杭州）有限公司</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026078107号-1</a><span>© <span id="year">2026</span> 扎根本性</span></div></div></footer>'''
 
 
 def page(title, description, path, body, active=None, og_image="assets/mountain-dawn-web.jpg", structured_data=None):
@@ -197,6 +198,8 @@ def update_home():
     text = text[:a] + article_feature + text[b:]
     people_feature = '''    <section class="section-space people-feature"><div class="container people-feature-grid"><a class="people-feature-photo" href="nanni.html"><img src="assets/ni-nanqi.jpg" alt="倪男奇肖像" loading="lazy"></a><div><p class="eyebrow"><span class="eyebrow-line"></span>PEOPLE & PARTNERS</p><h2>倪男奇与在地合作伙伴</h2><p>倪男奇长期参与米杉著作翻译、课程教学与本性治疗实践；郑州、石家庄、东莞和北京的合作伙伴，支持课程进入不同城市。</p><div class="people-feature-links"><a class="text-link" href="nanni.html">认识倪男奇 ↗</a><a class="text-link" href="partners.html">走进合作网络 ↗</a></div></div></div></section>\n\n'''
     text = text.replace('    <section class="contact section-space"', people_feature + '    <section class="contact section-space"', 1)
+    eq_feature = '''    <section class="section-space eq-home-feature"><div class="container"><div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span>EMOTIONAL INTELLIGENCE</p><h2>情商教育，从课堂走向实践</h2></div><p class="section-intro">2026 年北京一、二阶课程，连接体验式学习、活动设计与同伴带领。</p></div><div class="eq-home-grid"><a href="course-eq-level-one.html"><img src="assets/eq1-beijing-group-practice-2026.jpg" alt="北京情商一阶学员进行团体练习" loading="lazy"><span>2026 · 北京一阶</span><h3>看六天课程怎样展开 <b>↗</b></h3></a><a href="eq-alliance.html"><img src="assets/beijing-eq-2026.jpg" alt="北京情商二阶课堂合影" loading="lazy"><span>TRAINERS & PRACTICE</span><h3>认识本性情商培训师联盟 <b>↗</b></h3></a></div></div></section>\n\n'''
+    text = text.replace('    <section class="contact section-space"', eq_feature + '    <section class="contact section-space"', 1)
     text = text.replace('本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.', '本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.')
     text = text.replace('米杉是比利时心理治疗师、本性治疗创始人。', '米杉是比利时心理治疗师、本性治疗创始人。')
     text = text.replace('在中国，他通过著作、分享、工作坊与练习，和学习者一起探索如何把内在工作带回生活。', '他在中国的著作和课程积累多年，留下了许多可以继续读、继续练的资料。')
@@ -231,6 +234,7 @@ def update_home():
     text = text.replace('想了解课程、报名方式，或找到适合自己的学习入口？扫码联系小扎，告诉我们你现在最想了解什么。', '了解课程内容、报名方式与学习路径，可扫描二维码联系小扎；公众号「扎根本性」持续更新方法文章与课程资料。')
     text = text.replace('把力量带回生活', '本性治疗方法与课程')
     text = text.replace('从身体的感受出发，练习与内在资源重新联结。了解本性治疗与 2027 春季课程。', '了解米杉创立的本性治疗、中文著作、公开文章及 2027 春季课程。')
+    text = re.sub(r'<footer class="site-footer">.*?</footer>', footer().replace('href="index.html#contact"', 'href="#contact"'), text, count=1, flags=re.S)
     p.write_text(text, encoding="utf-8")
 
 

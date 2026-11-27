@@ -50,11 +50,12 @@ def course_tile(item):
 
 
 def build_hub():
-    body = hero("COURSES & PRACTICE", "课程与学习路径", "从本性治疗一阶、梦工作到二阶深化。了解学习内容、课程安排与咨询方式。", "课程")
+    body = hero("COURSES & PRACTICE", "课程与学习路径", "认识本性治疗、梦工作与情商教育的不同学习路径，并查看当前课程安排。", "课程")
     body += f'''<section class="section-space course-hub-intro"><div class="container course-intro-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>HOW WE LEARN</p><h2>阅读、示范、练习与持续复盘</h2></div><div><p>本性治疗的学习从概念进入体验：阅读著作和公开文章，理解身体感受与内在空间；在工作坊中观看示范、参加练习，并在课后继续实践与复盘。</p><p>不同课程有各自的重点。一阶建立基础，梦工作以梦境为入口，二阶在已有学习经验上深化方法。</p></div></div></section>
 <section class="section-space course-hub-section" id="spring-2027"><div class="container">{section_head('SPRING 2027', '2027 春季课程', '点击课程查看适合对象、学习内容、时间地点与报名咨询方式。')}<div class="course-hub-grid">{''.join(course_tile(item) for item in COURSES)}</div><a class="text-link course-hub-schedule" href="assets/spring-2027-schedule.png" target="_blank" rel="noopener">查看春季总课表 ↗</a></div></section>
+<section class="section-space eq-course-bridge"><div class="container">{section_head('EMOTIONAL INTELLIGENCE', '情商教育与带领实践', '从北京一阶的六天体验式学习，走向二阶主题设计和学员现场带领。')}<div class="eq-course-bridge-grid"><a href="course-eq-level-one.html"><img src="assets/eq1-beijing-group-practice-2026.jpg" alt="2026 年北京情商一阶团体活动" loading="lazy"><div><small>2026 · BEIJING</small><h3>情商教育培训师一阶</h3><p>阅读六天的学习主题与课堂记录。</p><span>了解一阶 ↗</span></div></a><a href="eq-alliance.html"><img src="assets/beijing-eq-2026.jpg" alt="2026 年北京情商二阶班级合影" loading="lazy"><div><small>TRAINERS & PRACTICE</small><h3>米杉本性情商培训师联盟</h3><p>走进教学现场、实践带领者与正在共创的项目。</p><span>认识联盟 ↗</span></div></a></div></div></section>
 <section class="section-space course-path"><div class="container">{section_head('A CONTINUING PRACTICE', '课程之外，学习仍在继续')}<div class="course-path-grid"><a href="reading.html"><span>01</span><h3>从著作建立认识</h3><p>米杉中文著作分别讨论本性治疗、梦工作、情商教育与养育。</p><b>浏览著作 ↗</b></a><a href="archive.html"><span>02</span><h3>从历程认识现场</h3><p>了解筑基班、工作坊和情商培训师认证班的公开教学记录。</p><b>查看教学历程 ↗</b></a><a href="index.html#contact"><span>03</span><h3>咨询适合的学习入口</h3><p>课程阶段和个人学习基础不同，可先联系小扎了解具体安排。</p><b>联系课程咨询 ↗</b></a></div></div></section>'''
-    page("课程与学习路径", "查看米杉 2027 春季本性治疗一阶、梦工作坊与二阶课程的学习内容、时间地点和报名咨询方式。", "courses.html", body)
+    page("课程与学习路径", "查看米杉本性治疗、梦工作与情商教育的学习路径，以及 2027 春季课程安排。", "courses.html", body)
 
 
 def build_detail(item):

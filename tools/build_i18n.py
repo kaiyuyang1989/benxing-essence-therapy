@@ -125,6 +125,10 @@ OVERRIDES = {
 from i18n_reviewed import REVIEWED
 for reviewed_language, reviewed_copy in REVIEWED.items():
     OVERRIDES[reviewed_language].update(reviewed_copy)
+from i18n_eq2026 import TRANSLATIONS as EQ2026_TRANSLATIONS
+for source, (english, french) in EQ2026_TRANSLATIONS.items():
+    OVERRIDES["en"][source] = english
+    OVERRIDES["fr"][source] = french
 
 
 def protect(value):
