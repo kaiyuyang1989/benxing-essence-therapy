@@ -91,7 +91,7 @@ if (mediaList) {
     })
     .then(data => {
       const items = Array.isArray(data.items) ? data.items : [];
-      mediaList.replaceChildren();
+      const cards = document.createDocumentFragment();
       for (const item of items) {
         let url;
         try { url = new URL(item.url); } catch { continue; }
@@ -125,11 +125,13 @@ if (mediaList) {
         action.textContent = item.kind === 'video' ? copy.watch : copy.listen;
         footer.append(source, action);
         card.append(meta, title, originalTitle, description, footer);
-        mediaList.append(card);
+        cards.append(card);
       }
-      if (!mediaList.children.length) throw new Error(copy.empty);
+      if (!cards.children.length) throw new Error(copy.empty);
+      mediaList.replaceChildren(cards);
     })
     .catch(() => {
+      if (mediaList.querySelector('.media-card')) return;
       mediaList.replaceChildren();
       const fallback = document.createElement('p');
       fallback.className = 'media-loading';
