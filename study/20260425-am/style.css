@@ -157,7 +157,7 @@ main { padding: 0 clamp(16px, 4vw, 62px) 44px; }
 .hero-side p { margin: 7px 0 15px; color: #e2eff0; font-size: .94rem; }
 .meta-foot { color: #b7d3d6; font-size: .85rem; }
 
-.media-card, .toc-card, .reading-card {
+.media-card, .practice-card, .toc-card, .reading-card {
   background: var(--paper);
   border: 1px solid var(--line);
   box-shadow: 0 12px 30px rgba(27, 63, 75, .045);
@@ -167,6 +167,20 @@ main { padding: 0 clamp(16px, 4vw, 62px) 44px; }
   padding: clamp(22px, 3vw, 34px);
   border-radius: 18px;
 }
+.practice-card {
+  margin: 22px 0;
+  padding: clamp(22px, 3vw, 34px);
+  border-radius: 18px;
+}
+.practice-intro { margin: 12px 0 20px; color: var(--muted); }
+.practice-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.practice-steps li { padding: 18px; border: 1px solid #dce8e8; border-radius: 12px; background: var(--soft); }
+.practice-time { display: block; margin-bottom: 6px; color: var(--teal); font-size: .78rem; font-weight: 800; letter-spacing: .06em; }
+.practice-steps strong { display: block; color: var(--deep); line-height: 1.35; }
+.practice-steps p { margin: 8px 0 10px; color: var(--muted); font-size: .9rem; }
+.practice-steps a { font-size: .86rem; font-weight: 700; }
+.practice-bottom { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 17px; }
+.practice-bottom p { margin: 0; color: var(--muted); font-size: .84rem; }
 .section-heading, .reading-intro {
   display: flex;
   justify-content: space-between;
@@ -396,6 +410,7 @@ mark { padding: 0 2px; border-radius: 2px; background: #ffdc86; color: #243944; 
 .site-footer { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; padding: 20px clamp(16px, 4vw, 62px) 34px; border-top: 1px solid #d9e4e6; color: var(--muted); font-size: .82rem; }
 
 @media (max-width: 900px) {
+  .practice-steps { grid-template-columns: 1fr; }
   .hero { grid-template-columns: 1fr; min-height: unset; }
   .hero-side { max-width: 620px; }
   .study-layout { grid-template-columns: 1fr; }
