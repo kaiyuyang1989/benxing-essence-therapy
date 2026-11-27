@@ -1,16 +1,21 @@
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.site-nav');
+const copy = ({
+  'zh-CN': {open:'打开导航',close:'关闭导航',poster:'课程海报',records:n=>`显示 ${n} 条教学记录`,watch:'去观看 ↗',listen:'去收听 ↗',empty:'节目列表为空',fetch:'无法读取节目列表',fallback:'节目列表暂时无法载入。请稍后刷新，或先到「扎根本性」公众号浏览。'},
+  en: {open:'Open menu',close:'Close menu',poster:'course poster',records:n=>`${n} teaching records shown`,watch:'Watch ↗',listen:'Listen ↗',empty:'The media list is empty',fetch:'Unable to load the media list',fallback:'The media list is temporarily unavailable. Please refresh later.'},
+  fr: {open:'Ouvrir le menu',close:'Fermer le menu',poster:'affiche de la formation',records:n=>`${n} étapes affichées`,watch:'Regarder ↗',listen:'Écouter ↗',empty:'La liste des médias est vide',fetch:'Impossible de charger la liste des médias',fallback:'La liste des médias est temporairement indisponible. Réessayez plus tard.'}
+})[document.documentElement.lang] || ({open:'Open menu',close:'Close menu',poster:'course poster',records:n=>`${n} records shown`,watch:'Watch ↗',listen:'Listen ↗',empty:'The media list is empty',fetch:'Unable to load the media list',fallback:'The media list is temporarily unavailable.'});
 
 menuButton?.addEventListener('click', () => {
   const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
   menuButton.setAttribute('aria-expanded', String(!isOpen));
-  menuButton.setAttribute('aria-label', isOpen ? '打开导航' : '关闭导航');
+  menuButton.setAttribute('aria-label', isOpen ? copy.open : copy.close);
   nav.classList.toggle('is-open', !isOpen);
 });
 
 nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
   menuButton?.setAttribute('aria-expanded', 'false');
-  menuButton?.setAttribute('aria-label', '打开导航');
+  menuButton?.setAttribute('aria-label', copy.open);
   nav.classList.remove('is-open');
 }));
 
@@ -24,7 +29,7 @@ document.querySelectorAll('.poster-open').forEach(button => {
   button.addEventListener('click', () => {
     lastTrigger = button;
     posterImage.src = button.dataset.poster;
-    posterImage.alt = button.dataset.title + '课程海报';
+    posterImage.alt = button.dataset.title + ' ' + copy.poster;
     posterTitle.textContent = button.dataset.title;
     posterOriginal.href = button.dataset.poster;
     dialog.showModal();
@@ -57,7 +62,7 @@ if (journeyFilters.length) {
     journeyFilters.forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.journeyFilter === filter));
     });
-    if (status) status.textContent = `显示 ${shown} 条教学记录`;
+    if (status) status.textContent = copy.records(shown);
   };
   journeyFilters.forEach(button => {
     button.addEventListener('click', () => applyJourneyFilter(button.dataset.journeyFilter));
@@ -81,7 +86,7 @@ const mediaList = document.querySelector('#media-list');
 if (mediaList) {
   fetch('media.json')
     .then(response => {
-      if (!response.ok) throw new Error('无法读取节目列表');
+      if (!response.ok) throw new Error(copy.fetch);
       return response.json();
     })
     .then(data => {
@@ -117,18 +122,18 @@ if (mediaList) {
         const source = document.createElement('span');
         source.textContent = item.source || '';
         const action = document.createElement('b');
-        action.textContent = item.kind === 'video' ? '去观看 ↗' : '去收听 ↗';
+        action.textContent = item.kind === 'video' ? copy.watch : copy.listen;
         footer.append(source, action);
         card.append(meta, title, originalTitle, description, footer);
         mediaList.append(card);
       }
-      if (!mediaList.children.length) throw new Error('节目列表为空');
+      if (!mediaList.children.length) throw new Error(copy.empty);
     })
     .catch(() => {
       mediaList.replaceChildren();
       const fallback = document.createElement('p');
       fallback.className = 'media-loading';
-      fallback.textContent = '节目列表暂时无法载入。请稍后刷新，或先到「扎根本性」公众号浏览。';
+      fallback.textContent = copy.fallback;
       mediaList.append(fallback);
     });
 }

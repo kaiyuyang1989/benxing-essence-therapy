@@ -40,6 +40,20 @@ MILESTONES = [
         "link": "https://xueronghua.bnu.edu.cn/kcypx/jz/jzyg/52692.html", "link_text": "阅读北师大讲座预告",
     },
     {
+        "id": "zhengzhou-2017", "year": "2017", "date": "4 月", "city": "郑州",
+        "kind": "本性治疗课程", "title": "与心能量在郑州的课程合作",
+        "intro": "米杉与郑州心能量的课程合作留下了课堂照片，也连接起当地持续学习本性治疗的伙伴。",
+        "details": ["2017 年 4 月的郑州课程照片，在团队的历史资料整理中被重新辨认。", "郑州心能量此后继续与米杉合作开展本性治疗课程。"],
+        "link": "partners.html#xin-neng-liang", "link_text": "认识郑州合作伙伴",
+    },
+    {
+        "id": "zhengzhou-2019", "year": "2019", "date": "本性治疗课程", "city": "郑州",
+        "kind": "本性治疗课程", "title": "郑州心能量的教学现场",
+        "intro": "米杉与倪男奇在郑州心能量的本性治疗课程中继续教学与交流。",
+        "details": ["课程期间，心能量团队组织了学员咨询师形象照拍摄。", "米杉与倪男奇的合影也拍摄于这次郑州课程。"],
+        "link": "partners.html#xin-neng-liang", "link_text": "查看合作资料",
+    },
+    {
         "id": "cohort-2025", "year": "2025", "date": "首届", "city": "中国",
         "kind": "系统培训", "title": "首届本性治疗筑基班",
         "intro": "从单次工作坊走向连续学习，首届筑基班把理论、示范、练习和阶段复盘连成一条路径。",
@@ -61,11 +75,32 @@ MILESTONES = [
         "link": "book-dream.html", "link_text": "读《梦的真相》",
     },
     {
+        "id": "beijing-regression-2025", "year": "2025", "date": "年龄回溯工作坊", "city": "北京",
+        "kind": "合作课程", "title": "英酷百兴心理主办年龄回溯工作坊",
+        "intro": "北京英酷百兴心理主办米杉年龄回溯工作坊，围绕当下感受与早期经验开展现场学习。",
+        "details": ["课程于 2025 年在北京举办。", "年龄回溯是本性治疗从当下身体感受进入内在工作的方式之一。"],
+        "link": "partners.html#ying-ku-bai-xing", "link_text": "认识北京合作伙伴",
+    },
+    {
         "id": "dongguan-2026", "year": "2026", "date": "5 月—8 月", "city": "东莞 · 大湾区",
         "kind": "本性治疗一阶与二阶", "title": "从入门到深化",
-        "intro": "春夏两季的大湾区课程，延续本性治疗的阶段式学习。",
-        "details": ["5 月的一阶课程以身体感受、内在空间与基础流程为起点。", "8 月东莞的二阶课程进一步练习评估、年龄回溯与资源锚定。"],
-        "link": "approach.html", "link_text": "查看方法与原则",
+        "intro": "东莞的本性治疗课程从一阶延续至二阶；2026 年 8 月二阶之前的课程由向光里主办。",
+        "details": ["2026 年 8 月二阶之前的东莞米杉课程均由向光里主办。", "5 月的一阶以身体感受和内在空间为起点；8 月二阶继续深化年龄回溯与资源锚定。"],
+        "link": "partners.html#xiang-guang-li", "link_text": "认识东莞课程伙伴",
+    },
+    {
+        "id": "pku-shenzhen-2026", "year": "2026", "date": "5 月 7 日", "city": "深圳",
+        "kind": "高校交流", "title": "走进北京大学深圳研究生院",
+        "intro": "米杉与倪男奇走进北京大学深圳研究生院，与学工教师团队开展本性情商体验交流。",
+        "details": ["交流以体验激发觉察，讨论教育者如何认识自己的情绪与内在经验。", "团队于 2026 年 6 月发布过这次 5 月 7 日活动的公开回顾。"],
+        "link": "nanni.html", "link_text": "认识倪男奇",
+    },
+    {
+        "id": "dongguan-space-2026", "year": "2026", "date": "8 月 3 日", "city": "东莞",
+        "kind": "本性学习交流", "title": "向光里·心空间的现场交流",
+        "intro": "米杉东莞二阶课程期间，伙伴们在向光里·心空间交流本性学习经验。",
+        "details": ["郑小鹰老师引介米杉课程来到东莞，并筹备向光里·心空间。", "8 月 3 日的交流围绕空间体验、本性学习心得与米杉答疑展开。"],
+        "link": "partners.html#xiang-guang-li", "link_text": "认识东莞合作伙伴",
     },
     {
         "id": "beijing-2026", "year": "2026", "date": "8 月 7—9 日", "city": "北京",
@@ -75,10 +110,19 @@ MILESTONES = [
         "link": "book-heart.html", "link_text": "读《由心咨询》",
     },
     {
+        "id": "qingdao-association-2026", "year": "2026", "date": "10 月 24—25 日", "city": "青岛",
+        "kind": "学术年会与工作坊", "title": "青岛精神分析协会：年龄回溯",
+        "intro": "米杉在青岛精神分析协会学术年会开展年龄回溯主题分享，并带领体验工作坊。",
+        "details": ["10 月 24 日为年龄回溯大会报告，10 月 25 日为年龄回溯体验工作坊。", "现场合影的课程横幅标注“青岛精神分析年会 · 2026.10.25”。"],
+        "image": "qingdao-age-regression-2026.jpg", "image_alt": "2026 年 10 月 25 日青岛年龄回溯体验工作坊合影",
+        "link": "article-regression.html", "link_text": "了解年龄回溯",
+    },
+    {
         "id": "qingdao-2026", "year": "2026", "date": "10 月 30 日—11 月 1 日", "city": "青岛",
         "kind": "本性梦工作坊", "title": "从梦境到内在工作",
         "intro": "三天的课程围绕梦境元素、转译、内在空间和小组练习展开。",
         "details": ["第一天认识梦的隐喻语言与转译方法。", "第二天把梦境中的情绪与内在空间联系起来。", "第三天通过角色扮演和案例练习，探索如何把梦中的认识带回生活。"],
+        "image": "qingdao-dream-2026.jpg", "image_alt": "2026 年 10 月 30 日至 11 月 1 日青岛米杉梦工坊合影",
         "link": "book-dream.html", "link_text": "读《梦的真相》",
     },
     {
@@ -86,6 +130,7 @@ MILESTONES = [
         "kind": "情商培训师认证", "title": "米杉情商培训师认证班",
         "intro": "北京的认证班将情绪教育与团体带领放进连续训练和实践。",
         "details": ["课程面向希望在教育与团体场景中应用情商教育方法的学习者。", "从理解情绪到设计活动、带领团体，训练关注方法如何进入真实关系。"],
+        "image": "beijing-eq-2026.jpg", "image_alt": "2026 年 11 月 3 日至 8 日北京米杉情商培训师认证班二阶合影",
         "link": "book-eq-coach.html", "link_text": "读《情商教练手册》",
     },
     {
@@ -101,9 +146,9 @@ MILESTONES = [
 TRACKS = {
     "beijing-2000": "therapy", "dream-2005": "dream",
     "eq-class-2006": "education university", "quanzhou-2010": "therapy dream university",
-    "beijing-2013": "dream university", "cohort-2025": "therapy",
-    "south-2025": "therapy", "dream-2025": "dream", "dongguan-2026": "therapy",
-    "beijing-2026": "therapy", "qingdao-2026": "dream",
+    "beijing-2013": "dream university", "zhengzhou-2017": "therapy", "zhengzhou-2019": "therapy", "cohort-2025": "therapy",
+    "south-2025": "therapy", "dream-2025": "dream", "beijing-regression-2025": "therapy", "dongguan-2026": "therapy",
+    "pku-shenzhen-2026": "education university", "dongguan-space-2026": "therapy", "beijing-2026": "therapy", "qingdao-association-2026": "therapy university", "qingdao-2026": "dream",
     "eq-2026": "education", "zhengzhou-2026": "therapy",
 }
 
@@ -111,12 +156,13 @@ TRACKS = {
 def milestone_card(item):
     paragraphs = "".join(f"<p>{E(detail)}</p>" for detail in item["details"])
     target = ' target="_blank" rel="noopener noreferrer"' if item["link"].startswith("http") else ""
-    return f'''<article class="journey-card" id="{item['id']}" data-track="{TRACKS[item['id']]}"><div class="journey-stamp"><span>{item['year']}</span><small>{E(item['date'])}</small></div><div class="journey-card-body"><p class="journey-kind">{E(item['city'])} <span aria-hidden="true">·</span> {E(item['kind'])}</p><h3>{E(item['title'])}</h3><p>{E(item['intro'])}</p><details><summary>查看教学内容 <span aria-hidden="true">＋</span></summary><div class="journey-detail">{paragraphs}<a href="{E(item['link'])}"{target}>{E(item['link_text'])} ↗</a></div></details></div></article>'''
+    photo = f'<a class="journey-photo" href="assets/{item["image"]}" target="_blank" rel="noopener" aria-label="查看{E(item["image_alt"])}原图"><img src="assets/{item["image"]}" alt="{E(item["image_alt"])}" loading="lazy"></a>' if item.get("image") else ""
+    return f'''<article class="journey-card" id="{item['id']}" data-track="{TRACKS[item['id']]}"><div class="journey-stamp"><span>{item['year']}</span><small>{E(item['date'])}</small></div><div class="journey-card-body"><p class="journey-kind">{E(item['city'])} <span aria-hidden="true">·</span> {E(item['kind'])}</p><h3>{E(item['title'])}</h3><p>{E(item['intro'])}</p>{photo}<details><summary>查看教学内容 <span aria-hidden="true">＋</span></summary><div class="journey-detail">{paragraphs}<a href="{E(item['link'])}"{target}>{E(item['link_text'])} ↗</a></div></details></div></article>'''
 
 
 def build_archive_page(page, hero, section_head):
     body = hero("THE JOURNEY", "在中国的教学历程", "按年份、城市和主题，阅读米杉在中国的高校资料、工作坊与系统培训记录。", "教学历程")
-    years = ("2000", "2005", "2006", "2010", "2013", "2025", "2026")
+    years = ("2000", "2005", "2006", "2010", "2013", "2017", "2019", "2025", "2026")
     links = ''.join(f'<a href="#year-{year}">{year}</a>' for year in years)
     body += f'''<section class="journey-opening section-space"><div class="container journey-opening-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>MICHEL IN CHINA</p><h2>著作、讲座与<br>现场课程</h2></div><div><p>2000 年以来，北京、泉州与各地课程留下了不同形式的教学资料。从梦工作坊和情商课程，到近年的筑基班与培训师认证，可以沿着年份阅读，也可以按主题筛选。</p><nav class="year-jump" aria-label="按年份查看教学历程">{links}</nav></div></div></section>'''
     body += '''<section class="journey-main section-space"><div class="container"><div class="journey-filter" aria-label="按主题筛选教学记录"><span>按主题阅读</span><div class="journey-filter-buttons" role="group" aria-label="教学主题"><button type="button" data-journey-filter="all" aria-pressed="true">全部</button><button type="button" data-journey-filter="therapy" aria-pressed="false">本性治疗</button><button type="button" data-journey-filter="dream" aria-pressed="false">梦工作</button><button type="button" data-journey-filter="education" aria-pressed="false">情商教育</button><button type="button" data-journey-filter="university" aria-pressed="false">高校资料</button></div><p id="journey-filter-status" class="sr-only" aria-live="polite"></p></div><div class="journey-rail">'''
@@ -125,8 +171,8 @@ def build_archive_page(page, hero, section_head):
         body += f'<div class="journey-year" id="year-{year}"><div class="journey-year-label"><span>{year}</span></div><div class="journey-year-cards">{cards}</div></div>'
     body += '</div></div></section>'
     city_stops = (
-        ("北京", "dream-2005"), ("泉州", "quanzhou-2010"), ("石家庄", None), ("郑州", "zhengzhou-2026"),
-        ("青岛", "qingdao-2026"), ("西安", None), ("兰州", None),
+        ("北京", "dream-2005"), ("泉州", "quanzhou-2010"), ("石家庄", None), ("郑州", "zhengzhou-2017"),
+        ("青岛", "qingdao-association-2026"), ("西安", None), ("兰州", None),
         ("乌鲁木齐", None), ("江门", None), ("深圳", "south-2025"), ("东莞", "dongguan-2026"),
     )
     cities = ''.join(f'<a href="#{anchor}" aria-label="查看{city}的教学记录">{city}</a>' if anchor else f'<span>{city}</span>' for city, anchor in city_stops)

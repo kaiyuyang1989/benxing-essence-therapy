@@ -1,6 +1,24 @@
 """Curated web editions of articles already published by 扎根本性."""
 
 from build_content import page, hero, section_head
+from html import escape
+
+
+PRINCIPLES_2024 = [
+    ("自我负责", "把关注带回自己的体验与选择。", "来访创造了其自身现实。变化来自内在。咨询过程完全以来访为中心。"),
+    ("全然临在", "回到此时此地，辨认身体里的感受。", "把问题识别为身体里的感受，此时此地，对感受全然敞开。"),
+    ("年龄回溯", "倾听当下感受可能连着的早期经验。", "探索我们受伤感受源点的一种方式，深度聆听受伤的内在空间。"),
+    ("去除认同", "辨认受伤状态，同时认识自己不只等于它。", "去除对内在受伤空间的认同；转换内在空间，认同有力量的自我。"),
+    ("转化能量", "从有资源的内在位置回应受伤部分。", "通过拥抱受伤的内在空间如同是我们自身内在的小孩一般，转化未解决的情绪能量。"),
+    ("锚定内核", "熟悉能够接纳与支持自己的内在状态。", "进一步锚定本性和认同内在父母。"),
+    ("整合变化", "把内在工作带回日常行动。", "澄清需要和目标，制定具体实操步骤，以便在日常生活中落实内在转化成果。"),
+]
+
+
+def principle_sections():
+    jumps = ''.join(f'<a href="#principle-{i}">{escape(title)}</a>' for i, (title, _, _) in enumerate(PRINCIPLES_2024, 1))
+    cards = ''.join(f'<article id="principle-{i}"><span>{i:02d}</span><h3>{escape(title)}</h3><p>{escape(summary)}</p><details><summary>阅读米杉原文</summary><blockquote>{escape(original)}</blockquote></details></article>' for i, (title, summary, original) in enumerate(PRINCIPLES_2024, 1))
+    return f'<nav class="principle-jumps" aria-label="本性治疗七原则">{jumps}</nav><div class="principle-cards">{cards}</div>'
 
 
 ARTICLES = [
@@ -81,7 +99,12 @@ def build():
 
     for a in ARTICLES:
         body = hero(a["category"], "本性治疗：<br>感受与内在空间" if a["path"] == "article-essence.html" else a["title"], a["summary"], "经典文章")
-        body += f'''<section class="section-space article-layout"><div class="container article-shell"><aside class="article-side"><span>扎根本性 · 文章选读</span><a href="insights.html">← 返回文章目录</a></aside><article class="article-prose"><p class="article-credit">{a["credit"]}</p>{a["body"]}<footer class="article-source"><p>更多原著论述与文章，可在公众号「扎根本性」继续阅读。</p><a href="https://weixin.qq.com/r/QBPG3qvE6vaVre_990ZS" target="_blank" rel="noopener">打开公众号 ↗</a></footer></article></div></section>'''
+        article_body = a["body"]
+        if a["path"] == "article-principles.html":
+            start = article_body.index('<div class="article-steps">')
+            end = article_body.index('<h2>早期与 2024 年表述的区别</h2>')
+            article_body = article_body[:start] + principle_sections() + article_body[end:]
+        body += f'''<section class="section-space article-layout"><div class="container article-shell"><aside class="article-side"><span>扎根本性 · 文章选读</span><a href="insights.html">← 返回文章目录</a></aside><article class="article-prose"><p class="article-credit">{a["credit"]}</p>{article_body}<footer class="article-source"><p>更多原著论述与文章，可在公众号「扎根本性」继续阅读。</p><a href="https://weixin.qq.com/r/QBPG3qvE6vaVre_990ZS" target="_blank" rel="noopener">打开公众号 ↗</a></footer></article></div></section>'''
         page(a["title"], a["summary"], a["path"], body, "insights.html")
 
 

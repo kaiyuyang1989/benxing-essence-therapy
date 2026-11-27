@@ -83,7 +83,7 @@ def main():
             if url.scheme or url.netloc or link.startswith(("mailto:", "tel:", "//")):
                 continue
             target_name = unquote(url.path) or name
-            target = ROOT / target_name
+            target = ROOT / target_name.lstrip("/")
             if target_name.endswith("/"):
                 target /= "index.html"
             if not target.is_file():

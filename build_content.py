@@ -16,10 +16,12 @@ def header(active=""):
         ("approach.html", "本性治疗"),
         ("courses.html", "课程"),
         ("teacher.html", "米杉"),
+        ("nanni.html", "倪男奇"),
         ("reading.html", "著作"),
         ("insights.html", "文章"),
         ("guide.html", "专题"),
         ("archive.html", "教学历程"),
+        ("partners.html", "合作"),
         ("watch.html", "影像"),
         ("voices.html", "理念"),
     ]
@@ -36,7 +38,7 @@ def header(active=""):
 
 
 def footer():
-    return '''<footer class="site-footer"><div class="container footer-inner"><div><strong>扎根本性</strong><p>本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.</p><div class="footer-links"><a href="index.html">首页</a><a href="approach.html">本性治疗</a><a href="teacher.html">米杉</a><a href="reading.html">著作</a><a href="guide.html">专题阅读</a><a href="archive.html">教学历程</a><a href="watch.html">影像</a><a href="index.html#contact">联系</a></div></div><div class="footer-meta"><span>奇毓教育科技（杭州）有限公司</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026078107号-1</a><span>© <span id="year">2026</span> 扎根本性</span></div></div></footer>'''
+    return '''<footer class="site-footer"><div class="container footer-inner"><div><strong>扎根本性</strong><p>本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.</p><div class="footer-links"><a href="index.html">首页</a><a href="approach.html">本性治疗</a><a href="teacher.html">米杉</a><a href="nanni.html">倪男奇</a><a href="reading.html">著作</a><a href="guide.html">专题阅读</a><a href="archive.html">教学历程</a><a href="partners.html">合作网络</a><a href="watch.html">影像</a><a href="index.html#contact">联系</a></div></div><div class="footer-meta"><span>奇毓教育科技（杭州）有限公司</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026078107号-1</a><span>© <span id="year">2026</span> 扎根本性</span></div></div></footer>'''
 
 
 def page(title, description, path, body, active=None, og_image="assets/mountain-dawn-web.jpg", structured_data=None):
@@ -47,7 +49,7 @@ def page(title, description, path, body, active=None, og_image="assets/mountain-
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#173d34">
 <meta name="description" content="{E(description)}"><link rel="canonical" href="{canonical}"><title>{E(title)}｜扎根本性</title>
 <meta property="og:type" content="website"><meta property="og:site_name" content="扎根本性"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="{canonical}"><meta property="og:title" content="{E(title)}｜扎根本性"><meta property="og:description" content="{E(description)}"><meta property="og:image" content="https://essencetherapy.cn/{E(og_image)}">
-{schema}<link rel="icon" type="image/png" href="assets/essence-logo-web.png"><link rel="stylesheet" href="styles.css"><script defer src="app.js"></script></head>
+{schema}<link rel="icon" type="image/png" href="assets/essence-logo-web.png"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="extra.css"><script defer src="app.js"></script></head>
 <body id="top">{header(active or path)}<main id="main">{body}</main>{footer()}</body></html>'''
     (DIST / path).write_text(document, encoding="utf-8")
 
@@ -148,7 +150,9 @@ def build_voices():
 
 def update_home():
     p = DIST / "index.html"
-    text = p.read_text(encoding="utf-8")
+    text = (ROOT / "content/home-base.html").read_text(encoding="utf-8")
+    if 'href="extra.css"' not in text:
+        text = text.replace('href="styles.css">', 'href="styles.css"><link rel="stylesheet" href="extra.css">', 1)
     text = text.replace('七种著作，<br>从你关心的那本读起。', '六部著作，<br>从原书认识本性。')
     text = text.replace('七种中文出版物，逐本介绍。', '六部中文出版物，逐本介绍。')
     text = text.replace('七种已核实的中文出版著作', '六部中文出版著作')
@@ -182,6 +186,8 @@ def update_home():
     b = text.index('    <section class="contact section-space"', a)
     article_feature = '''    <section class="public-voice section-space" aria-labelledby="voice-heading"><div class="container public-voice-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>FROM OUR ARCHIVE</p><h2 id="voice-heading">本性治疗文献与<br>公众号文章选读</h2><p>阅读米杉与本性团队关于本性治疗、七原则、年龄回溯与梦工作的文章。</p><a class="text-link" href="insights.html">阅读经典文章 ↗</a></div><div class="voice-image" role="img" aria-label="晨光中的远山与树林"></div></div></section>\n\n'''
     text = text[:a] + article_feature + text[b:]
+    people_feature = '''    <section class="section-space people-feature"><div class="container people-feature-grid"><a class="people-feature-photo" href="nanni.html"><img src="assets/ni-nanqi.jpg" alt="倪男奇肖像" loading="lazy"></a><div><p class="eyebrow"><span class="eyebrow-line"></span>PEOPLE & PARTNERS</p><h2>倪男奇与在地合作伙伴</h2><p>倪男奇长期参与米杉著作翻译、课程教学与本性治疗实践；郑州、石家庄、东莞和北京的合作伙伴，支持课程进入不同城市。</p><div class="people-feature-links"><a class="text-link" href="nanni.html">认识倪男奇 ↗</a><a class="text-link" href="partners.html">走进合作网络 ↗</a></div></div></div></section>\n\n'''
+    text = text.replace('    <section class="contact section-space"', people_feature + '    <section class="contact section-space"', 1)
     text = text.replace('本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.', '本性治疗、梦工作与社会情感学习。 / Essence Therapy, Dream Work & SEL.')
     text = text.replace('米杉是比利时心理治疗师、本性治疗创始人。', '米杉是比利时心理治疗师、本性治疗创始人。')
     text = text.replace('在中国，他通过著作、分享、工作坊与练习，和学习者一起探索如何把内在工作带回生活。', '他在中国的著作和课程积累多年，留下了许多可以继续读、继续练的资料。')
