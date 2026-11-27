@@ -5,6 +5,7 @@ let address = URL(string: CommandLine.arguments[1])!
 let width = Int(CommandLine.arguments[2])!
 let height = Int(CommandLine.arguments[3])!
 let output = URL(fileURLWithPath: CommandLine.arguments[4])
+let selector = CommandLine.arguments.count > 5 ? CommandLine.arguments[5] : ""
 
 let app = NSApplication.shared
 app.setActivationPolicy(.prohibited)
@@ -13,13 +14,19 @@ final class Capture: NSObject, WKNavigationDelegate {
     let output: URL
     let width: Int
     let height: Int
-    init(output: URL, width: Int, height: Int) {
+    let selector: String
+    init(output: URL, width: Int, height: Int, selector: String) {
         self.output = output
         self.width = width
         self.height = height
+        self.selector = selector
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if !self.selector.isEmpty {
+                webView.evaluateJavaScript("document.querySelector('\(self.selector)')?.scrollIntoView()")
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let configuration = WKSnapshotConfiguration()
             configuration.rect = CGRect(x: 0, y: 0, width: self.width, height: self.height)
             configuration.snapshotWidth = NSNumber(value: self.width)
@@ -35,6 +42,7 @@ final class Capture: NSObject, WKNavigationDelegate {
                 fflush(stdout)
                 exit(0)
             }
+            }
         }
     }
 }
@@ -42,7 +50,7 @@ final class Capture: NSObject, WKNavigationDelegate {
 let frame = NSRect(x: -2200, y: -2200, width: width, height: height)
 let window = NSWindow(contentRect: frame, styleMask: [.borderless], backing: .buffered, defer: false)
 let webView = WKWebView(frame: NSRect(x: 0, y: 0, width: width, height: height))
-let capture = Capture(output: output, width: width, height: height)
+let capture = Capture(output: output, width: width, height: height, selector: selector)
 webView.navigationDelegate = capture
 window.contentView = webView
 window.orderFront(nil)
