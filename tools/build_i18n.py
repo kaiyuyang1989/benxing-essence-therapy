@@ -185,6 +185,8 @@ def batches(values, limit=1600):
 
 def page_strings(soup):
     for node in soup.find_all(string=True):
+        if node.find_parent(id="media-list"):
+            continue  # Localized media cards are rendered from each language's media.json.
         if node.parent.name not in ("script", "style") and HAN.search(str(node)):
             yield str(node).strip()
     for tag in soup.find_all(True):
@@ -293,6 +295,9 @@ def decorate(soup, name, lang):
 
 
 def localize_page(soup, name, lang, cache):
+    media_list = soup.select_one("#media-list")
+    if media_list:
+        media_list.clear()  # render_media.py fills this from the localized JSON.
     for node in list(soup.find_all(string=True)):
         if node.parent.name in ("script", "style"):
             continue

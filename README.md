@@ -27,9 +27,9 @@
 
 ## 更新方式
 
-改动页面内容后，依次运行 `python3 build_content.py`、`python3 build_guide.py`、`python3 build_editorial.py`、`python3 build_courses.py`、`python3 build_profiles.py`、`python3 tools/finalize_site.py`、`.venv/bin/python tools/build_i18n.py`、`python3 tools/audit_site.py`、`.venv/bin/python tools/audit_i18n.py` 和 `python3 check_public_copy.py`，再检查桌面与手机宽度。首页底稿是 `content/home-base.html`，不要直接修改构建后的 `dist/index.html`；多语言译名和关键标题在 `tools/build_i18n.py`，其余翻译缓存位于 `content/i18n-cache.json`。课程日期、价格和海报必须与当期事实表同步。六本书以用户提供的 `WechatIMG5362.jpg` 海报所列版本为准；旧名《情商魔法训练营》不再另列。`梦的真相` 用 2021 年版，`儿童情商教育` 用 2022 年版；`内在父母与内在小孩的拥抱` 暂用海报局部呈现，封面对应印次待出版社核实并补高清图。每本提供独立介绍和统一微信小店扫码购书入口，本站不提供图书下载。图书尚未在自家微信小店作为自营商品上架。制作说明只留在仓库文档，不进入对外页面。
+改动页面内容后，依次运行 `python3 build_content.py`、`python3 build_guide.py`、`python3 build_editorial.py`、`python3 build_courses.py`、`python3 build_profiles.py`、`python3 tools/finalize_site.py`、`.venv/bin/python tools/build_i18n.py`、`python3 tools/render_media.py`、`python3 tools/audit_site.py`、`.venv/bin/python tools/audit_i18n.py` 和 `python3 check_public_copy.py`，再检查桌面与手机宽度。首页底稿是 `content/home-base.html`，不要直接修改构建后的 `dist/index.html`；多语言译名和关键标题在 `tools/build_i18n.py`，其余翻译缓存位于 `content/i18n-cache.json`。课程日期、价格和海报必须与当期事实表同步。六本书以用户提供的 `WechatIMG5362.jpg` 海报所列版本为准；旧名《情商魔法训练营》不再另列。`梦的真相` 用 2021 年版，`儿童情商教育` 用 2022 年版；`内在父母与内在小孩的拥抱` 暂用海报局部呈现，封面对应印次待出版社核实并补高清图。每本提供独立介绍和统一微信小店扫码购书入口，本站不提供图书下载。图书尚未在自家微信小店作为自营商品上架。制作说明只留在仓库文档，不进入对外页面。
 
-以后增加一个公开节目，只需在 `dist/media.json` 的 `items` 数组中复制一条记录，修改 `kind`（`video` 或 `audio`）、语言、标题、简介、来源与 HTTPS 原节目网址；`watch.html` 会自动生成卡片，不需要改页面布局。上站前核对节目已公开、内容与署名准确，网站只做跳转。新的学员原话或课堂人物照片须先核清官网使用范围。
+以后增加一个公开节目，在 `dist/media.json` 的 `items` 数组中复制一条记录，修改 `kind`（`video` 或 `audio`）、语言、标题、简介、来源与 HTTPS 原节目网址；同步更新 `dist/en/media.json`、`dist/fr/media.json` 的译文，运行 `python3 tools/render_media.py` 即可生成三语静态卡片。页面即使禁用 JavaScript 也能显示节目，脚本只作增量增强。上站前核对节目已公开、内容与署名准确，网站只做跳转；包含会话密钥或时效参数的微信分享地址不得放入公开页面。新的学员原话或课堂人物照片须先核清官网使用范围。
 
 ## 当前部署
 

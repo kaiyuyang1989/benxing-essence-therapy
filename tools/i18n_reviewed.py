@@ -68,6 +68,23 @@ REVIEWED = {
 }
 
 REVIEWED["en"].update({
+    "米杉谈沟通与个人成长": "Michel Claeys on communication and personal development",
+    "米杉参与的公开访谈视频。由 Julien Peron 发布，可在原平台观看。": "A public interview with Michel Claeys, published by Julien Peron. Watch it on the original platform.",
+    "情绪与社会性教育": "Emotional and social education",
+    "米杉接受 Innovation en Éducation 的公开音频访谈，约 43 分钟。": "A public audio interview with Michel Claeys, produced by Innovation en Éducation. Approximately 43 minutes.",
+    "学校氛围与社会心理能力": "School climate and psychosocial skills",
+    "一场关于教育现场实践工具的公开音频访谈，约 48 分钟。": "A public audio interview on practical approaches to school climate and psychosocial skills. Approximately 48 minutes.",
+})
+REVIEWED["fr"].update({
+    "米杉谈沟通与个人成长": "Michel Claeys : communication et développement personnel",
+    "米杉参与的公开访谈视频。由 Julien Peron 发布，可在原平台观看。": "Entretien public avec Michel Claeys, publié par Julien Peron. À voir sur la plateforme d’origine.",
+    "情绪与社会性教育": "Éducation émotionnelle et sociale",
+    "米杉接受 Innovation en Éducation 的公开音频访谈，约 43 分钟。": "Entretien audio public avec Michel Claeys, réalisé par Innovation en Éducation. Environ 43 minutes.",
+    "学校氛围与社会心理能力": "Climat scolaire et compétences psychosociales",
+    "一场关于教育现场实践工具的公开音频访谈，约 48 分钟。": "Entretien audio public sur les pratiques favorisant le climat scolaire et les compétences psychosociales. Environ 48 minutes.",
+})
+
+REVIEWED["en"].update({
     "从倾听到身体觉察，再到联结资源与整合行动，了解米杉的内在工作路径。": "From listening and embodied awareness to inner resources and action, explore Michel Claeys's path of inner work.",
     "本性治疗是米杉发展的一套心理咨询方法。它从倾听困扰开始，引导来访者留意当下的身体感受，辨认受伤与资源性的内在空间，并在生活中尝试新的选择。": "Essence Therapy is a counseling approach developed by Michel Claeys. It begins by listening, then attends to present bodily feelings, distinguishes wounded and resourceful inner spaces, and supports new choices in daily life.",
     "内在工作的七个步骤": "Seven Steps of Inner Work",
