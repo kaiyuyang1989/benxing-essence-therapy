@@ -200,6 +200,14 @@ def page_strings(soup):
 
 def collect():
     pages = {file.name: BeautifulSoup(file.read_text(encoding="utf-8"), "html.parser") for file in sorted(DIST.glob("*.html"))}
+    # The previous build writes the language switcher and hreflang links back
+    # into the Chinese source pages. Remove those generated nodes before
+    # rebuilding, so repeated releases do not accumulate duplicate controls.
+    for soup in pages.values():
+        for switcher in soup.select(".language-switcher"):
+            switcher.decompose()
+        for alternate in soup.select('link[rel="alternate"][hreflang]'):
+            alternate.decompose()
     values = set()
     for soup in pages.values():
         values.update(page_strings(soup))
@@ -347,7 +355,8 @@ def main():
         (DIST / lang / "media.json").write_text(json.dumps(localized_media, ensure_ascii=False, indent=2), encoding="utf-8")
     for name, soup in pages.items():
         decorate(soup, name, "zh-CN")
-        (DIST / name).write_text(str(soup), encoding="utf-8")
+        rendered = re.sub(r"(?i)^<!doctype html>\n+", "<!DOCTYPE html>\n", str(soup))
+        (DIST / name).write_text(rendered, encoding="utf-8")
     write_sitemap(sorted(pages))
     print("Built %d trilingual pages" % (len(pages) * 3))
 

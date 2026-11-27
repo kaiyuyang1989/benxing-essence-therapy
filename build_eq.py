@@ -3,6 +3,7 @@
 from html import escape as E
 
 from build_content import hero, page, section_head
+from tools.eq_people import BACKGROUNDS, PEOPLE, PUBLIC_LINKS
 
 
 LEVEL_ONE_DAYS = [
@@ -40,6 +41,7 @@ def build_level_one():
     body += '<div class="eq-gallery-grid">'
     body += photo("eq1-beijing-michel-teaching-2026.jpg", "米杉在北京情商一阶课堂讲解情绪识别", "米杉在课堂上讲解情绪与活动设计。")
     body += photo("eq1-beijing-group-practice-2026.jpg", "北京情商一阶学员围成圆圈进行活动", "学员通过团体活动体验关系与合作。", True)
+    body += photo("eq1-beijing-classroom-2026.jpg", "2026 年北京情商一阶课堂的团体活动", "2026 / 08 · 从活动体验进入课堂讨论。")
     body += '</div></div></section>'
     body += '''<section class="section-space eq-continue"><div class="container eq-continue-grid"><div><p class="eyebrow"><span class="eyebrow-line"></span>FROM CLASS TO PRACTICE</p><h2>学习之后，继续带领</h2><p>2026 年 11 月的北京二阶课程，让学员把一阶经验带入自己的主题活动：设计、带领、观察团体，再接收反馈。课程由此延伸为同伴之间的持续学习。</p><a class="text-link" href="eq-alliance.html">认识本性情商培训师联盟 ↗</a></div><a href="eq-alliance.html" class="eq-continue-photo"><img src="assets/beijing-eq-2026.jpg" alt="2026 年 11 月北京情商培训师二阶课程合影" loading="lazy"></a></div></section>'''
     page(
@@ -63,11 +65,13 @@ def build_alliance():
     body += photo("eq1-beijing-group-practice-2026.jpg", "2026 年 8 月北京情商一阶课堂团体练习", "2026 / 08 · 北京一阶：在活动中建立信任。")
     body += photo("eq2-beijing-classroom-2026.jpg", "2026 年 11 月北京情商二阶课堂学员带领活动", "2026 / 11 · 北京二阶：学员走到课堂中央。")
     body += photo("eq2-beijing-facilitation-2026.jpg", "北京情商二阶课堂中的学员主题带领", "2026 / 11 · 主题活动与同伴观察。")
+    body += photo("eq2-beijing-circle-2026.jpg", "2026 年北京情商二阶课堂围圈活动", "2026 / 11 · 团体在圆圈中继续练习。")
+    body += photo("eq2-beijing-group-2026.jpg", "2026 年北京情商二阶课堂集体练习", "2026 / 11 · 从学员带领回到共同体验。")
     body += '</div></div></section>'
     body += '''<section class="section-space eq-people"><div class="container">'''
     body += section_head("PEOPLE IN PRACTICE", "导师与实践带领者", "方法教学与课堂实践相接，带领能力在一次次设计和反馈中形成。")
     body += '''<div class="eq-people-grid"><article class="eq-person-card"><img src="assets/michel-life-web.jpg" alt="米杉肖像" loading="lazy"><div><small>COURSE FOUNDER</small><h3>米杉 <span>Michel Claeys Bouuaert</span></h3><p>比利时心理治疗师、本性治疗创始人。长期从事情商教育、心理咨询与体验式培训，为课程提供方法和现场教学。</p><a class="text-link" href="teacher.html">认识米杉 ↗</a></div></article><article class="eq-person-card"><img src="assets/ni-nanqi.jpg" alt="倪男奇肖像" loading="lazy"><div><small>TEACHING COLLABORATOR</small><h3>倪男奇 <span>Ni Nanqi</span></h3><p>长期参与米杉著作的中文译介和课程协作，连接方法文本与中文学习现场，并持续开展本性治疗教学。</p><a class="text-link" href="nanni.html">认识倪男奇 ↗</a></div></article></div>'''
-    body += '''<div class="eq-practice-intro"><div><small>THE 2026 COHORT</small><h3>来自不同实践领域的带领者</h3></div><p>二阶课程中，22 位学员分别设计并带领约 90 分钟的主题活动。有人从情绪识别进入，有人聚焦亲密关系、家庭、信任、合作或自我联结。不同的专业经验，在同一个课堂中相互校准。</p></div>'''
+    body += '''<div class="eq-practice-intro"><div><small>THE 2026 COHORT</small><h3>来自不同实践领域的带领者</h3></div><p>二阶课程中，22 位学员分别设计并带领约 90 分钟的主题活动。有人从情绪识别进入，有人聚焦亲密关系、家庭、信任、合作或自我联结。不同的专业经验，在同一个课堂中相互校准。<a class="text-link" href="#facilitators">认识 22 位课堂带领者 ↗</a></p></div>'''
     themes = [
         ("情绪与自我觉察", "认识感受、需要与身体信号。"),
         ("倾听与关系", "在亲密关系和团体中练习沟通。"),
@@ -78,6 +82,23 @@ def build_alliance():
         f'<article><span>0{i}</span><h4>{E(title)}</h4><p>{E(summary)}</p></article>'
         for i, (title, summary) in enumerate(themes, 1)
     ) + '</div></div></section>'
+    body += '<section class="section-space eq-members" id="facilitators"><div class="container">'
+    body += section_head("THE PEOPLE · BEIJING 2026", "22 位课堂带领者", "六天课程，每人围绕自己的主题设计和带领一场课堂活动。")
+    body += '''<figure class="eq-members-photo"><a href="assets/beijing-eq-2026.jpg" target="_blank" rel="noopener" aria-label="查看2026年北京情商二阶班级合影原图"><img src="assets/beijing-eq-2026.jpg" alt="2026年北京情商培训师二阶班级合影" loading="lazy"></a><figcaption>北京 · 2026 年 11 月 3—8 日</figcaption></figure>'''
+    body += '<nav class="eq-day-jump" aria-label="按课程日期查看带领者">' + ''.join(
+        f'<a href="#facilitators-day-{day}">11 月 {day + 2} 日</a>' for day in range(1, 7)
+    ) + '</nav>'
+    for day in range(1, 7):
+        cards = []
+        for number, person in enumerate(PEOPLE, 1):
+            person_day, name, _, background_code, topic, activity = person
+            if person_day != day:
+                continue
+            source = PUBLIC_LINKS.get(name)
+            source_link = f'<a class="text-link" href="{E(source[0])}" target="_blank" rel="noopener noreferrer">{E(source[1])}</a>' if source else ''
+            cards.append(f'''<article class="eq-member-card"><div class="eq-member-top"><span>{number:02d}</span><small>{E(BACKGROUNDS[background_code][0])}</small></div><h4>{E(name)}</h4><h5>{E(topic[0])}</h5><p>{E(activity[0])}</p>{source_link}</article>''')
+        body += f'''<div class="eq-member-day" id="facilitators-day-{day}"><div class="eq-member-day-head"><span>DAY {day:02d}</span><h3>11 月 {day + 2} 日</h3></div><div class="eq-member-grid">{"".join(cards)}</div></div>'''
+    body += '</div></section>'
     body += '<section class="section-space eq-projects" id="projects"><div class="container">'
     body += section_head("WORK IN PROGRESS", "从课堂延伸的项目", "持续学习有不同形式；每一个项目都从真实的参与和需求出发。")
     body += '''<div class="eq-project-grid"><article><small>ONGOING PRACTICE</small><h3>主题活动与同伴复盘</h3><p>从二阶的现场带领继续整理活动设计、团体观察和反馈，让课堂经验成为可以反复打磨的实践。</p></article><article><small>IN DEVELOPMENT</small><h3>带领者访谈</h3><p>邀请愿意分享的伙伴谈自己的学习路径、专业背景与带领经验，让不同实践者的声音逐步被看见。</p></article><article><small>IN DEVELOPMENT</small><h3>家庭与青少年情商学习</h3><p>围绕家长和青少年的不同需要，调研并共创体验式学习内容；具体形式与时间仍在形成中。</p></article></div><div class="eq-project-links"><a class="text-link" href="book-eq-coach.html">从《情商教练手册》继续阅读 ↗</a><a class="text-link" href="index.html#contact">联系课程与合作 ↗</a></div></div></section>'''

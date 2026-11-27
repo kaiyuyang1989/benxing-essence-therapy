@@ -125,3 +125,43 @@ TRANSLATIONS.update({
     "阅读六天的学习主题与课堂记录。": ("Explore six days of themes and classroom records.", "Découvrez les thèmes et les scènes de classe des six journées."),
     "青岛 · 梦工作坊": ("Qingdao · Dreamwork Workshop", "Qingdao · Atelier sur les rêves"),
 })
+
+# The member names, topics and short introductions are maintained together in
+# the public roster, so all three language editions stay aligned.
+from eq_people import BACKGROUNDS, PEOPLE, PUBLIC_LINKS
+
+TRANSLATIONS.update({
+    "22 位课堂带领者": ("22 classroom facilitators", "22 personnes animant des ateliers"),
+    "六天课程，每人围绕自己的主题设计和带领一场课堂活动。": (
+        "Over six days, each participant designed and led a classroom activity around a chosen theme.",
+        "Pendant six jours, chaque participant a conçu et animé un atelier autour de son propre thème.",
+    ),
+    "认识 22 位课堂带领者 ↗": ("Meet the 22 classroom facilitators ↗", "Rencontrer les 22 animateurs des ateliers ↗"),
+    "按课程日期查看带领者": ("Browse facilitators by course date", "Parcourir les animateurs par date de formation"),
+    "2026 年北京情商一阶课堂的团体活动": ("Group activity in the Beijing Emotional Intelligence Level I classroom, 2026", "Activité de groupe au niveau I en intelligence émotionnelle à Pékin en 2026"),
+    "2026 / 08 · 从活动体验进入课堂讨论。": ("August 2026 · Classroom discussion grows from lived activities.", "Août 2026 · La discussion en classe naît de l'expérience des activités."),
+    "2026 年北京情商二阶课堂围圈活动": ("Circle activity in the Beijing Emotional Intelligence Level II classroom, 2026", "Activité en cercle au niveau II en intelligence émotionnelle à Pékin en 2026"),
+    "2026 / 11 · 团体在圆圈中继续练习。": ("November 2026 · The group continues its practice in a circle.", "Novembre 2026 · Le groupe poursuit sa pratique en cercle."),
+    "2026 年北京情商二阶课堂集体练习": ("Group practice in the Beijing Emotional Intelligence Level II classroom, 2026", "Exercice collectif au niveau II en intelligence émotionnelle à Pékin en 2026"),
+    "2026 / 11 · 从学员带领回到共同体验。": ("November 2026 · Participant facilitation becomes a shared experience.", "Novembre 2026 · L'animation par les participants devient une expérience partagée."),
+    "2026 年青岛米杉梦工作坊结课合影": ("Group portrait at the close of Michel Claeys's Qingdao dreamwork workshop, 2026", "Photo de groupe à la fin de l'atelier sur les rêves de Michel Claeys à Qingdao, 2026"),
+    "2026 年郑州本性治疗一阶课堂场景": ("Classroom scene from Essence Therapy Level I, Zhengzhou, 2026", "Scène de classe du niveau I en thérapie du Moi essentiel à Zhengzhou, 2026"),
+    "带着梦的探索，再次相聚 ↗": ("Together after exploring dreams ↗", "Se retrouver après l'exploration des rêves ↗"),
+    "看见现场练习的细节 ↗": ("See the details of classroom practice ↗", "Découvrir les détails de la pratique en classe ↗"),
+    "查看2026年北京情商二阶班级合影原图": ("View the original group photograph of Beijing Emotional Intelligence Level II, 2026", "Voir la photo de groupe originale du niveau II en intelligence émotionnelle à Pékin en 2026"),
+    "2026年北京情商培训师二阶班级合影": ("Group portrait of Beijing Emotional Intelligence Trainer Level II, 2026", "Portrait de groupe du niveau II de la formation de formateurs à Pékin en 2026"),
+    "北京 · 2026 年 11 月 3—8 日": ("Beijing · 3–8 November 2026", "Pékin · du 3 au 8 novembre 2026"),
+    "查看2026 年北京情商一阶课堂的团体活动原图": ("View the original image of a Beijing Level I group activity in 2026", "Voir la photo originale d'une activité de groupe au niveau I à Pékin en 2026"),
+    "查看2026 年北京情商二阶课堂围圈活动原图": ("View the original image of a Beijing Level II circle activity in 2026", "Voir la photo originale d'une activité en cercle au niveau II à Pékin en 2026"),
+    "查看2026 年北京情商二阶课堂集体练习原图": ("View the original image of Beijing Level II group practice in 2026", "Voir la photo originale d'un exercice collectif au niveau II à Pékin en 2026"),
+})
+for day in range(3, 9):
+    TRANSLATIONS[f"11 月 {day} 日"] = (f"{day} November", f"{day} novembre")
+for background in BACKGROUNDS.values():
+    TRANSLATIONS[background[0]] = background[1:]
+for _, name, romanized, _, topic, activity in PEOPLE:
+    TRANSLATIONS[name] = (romanized, romanized)
+    TRANSLATIONS[topic[0]] = topic[1:]
+    TRANSLATIONS[activity[0]] = activity[1:]
+for _, label_zh, label_en, label_fr in PUBLIC_LINKS.values():
+    TRANSLATIONS[label_zh] = (label_en, label_fr)
